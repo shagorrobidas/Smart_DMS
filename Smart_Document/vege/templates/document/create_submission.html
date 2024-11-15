@@ -1,0 +1,7 @@
+<!-- create_submission.html -->
+<h2>Create Submission</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Renders the form fields as paragraph elements -->
+    <button type="submit">Save</button>
+</form>

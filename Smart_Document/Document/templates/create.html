@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Layout</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        
+        .form-container {
+            width: 90%;
+            max-width: 75%;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .form-group i {
+            margin-right: 10px;
+            color: #666;
+        }
+
+        select, input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .section-title {
+            text-align: center;
+            font-weight: bold;
+            color: #666;
+            margin: 20px 0;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-title::before, .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 0 10px;
+        }
+        .custom-button {
+            width: 100%;
+            
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #4CAF50; /* Main color */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .custom-button:hover {
+            background-color: #45a049; /* Darker shade on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .custom-button:active {
+            background-color: #3e8e41;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-group">
+            <i class="fas fa-folder"></i>
+            <select>
+                <option>Select Page</option>
+                <option>Assignment</option>
+                <option>Project</option>
+                <option>Report</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <i class="fas fa-code"></i>
+            <input type="text" placeholder="Course Code">
+        </div>
+        
+        <div class="form-group">
+            <i class="fas fa-font"></i>
+            <input type="text" placeholder="Course Title">
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-hashtag"></i>
+            <input type="number" placeholder="Number of Assignment">
+        </div>
+
+        <div class="section-title">Faculty Information</div>
+
+        <div class="form-group">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Teacher Name">
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-sitemap"></i>
+            <input type="text" placeholder="Depatment">
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-clipboard"></i>
+            <select>
+                <option>Select Designation</option>
+                <option>Professor</option>
+                <option>Lecturer</option>
+                <option>Assistant Professor</option>
+            </select>
+        </div>
+    
+        <div class="section-title">Student Information</div>
+
+        <div class="form-group">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Name">
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-id-card"></i>
+            <input type="text" placeholder="Student ID">
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-users"></i>
+            <input type="text" placeholder="Intake">
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-layer-group"></i>
+            <input type="text" placeholder="Section">
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-graduation-cap"></i>
+            <select>
+                <option>Name of Program</option>
+                <option>Professor</option>
+                <option>Lecturer</option>
+                <option>Assistant Professor</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <i class="fa-regular fa-calendar-days"></i>
+            <input type="date" placeholder="Name of Program">
+        </div>
+    
+        <div class="form-group">
+            <a class="custom-button" href="#">Genarate</a>
+        </div>
+    </div>
+</body>
+</html>

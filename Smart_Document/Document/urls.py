@@ -19,7 +19,7 @@ urlpatterns = [
     path(
         'submission/create/',
         createFromView.as_view(),
-        name='submission_create'
+        name='assignment_create'
         ),
 
 ]

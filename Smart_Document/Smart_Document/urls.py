@@ -12,6 +12,8 @@ urlpatterns = [
         'manage/',
         admin.site.urls
     ),
+    path('api/', include('API.urls')),
+
     path('recipes/', receipes, name="home"),
     path('delete-recipes/<id>', delete_receipes, name="delete_recipes"),
     path(

@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Document',
     'vege',
+    'rest_framework',
+    # 'API',
 ]
 
 MIDDLEWARE = [

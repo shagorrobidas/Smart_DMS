@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Document',
     'vege',
     'rest_framework',
+    # 'API',
 ]
 
 MIDDLEWARE = [

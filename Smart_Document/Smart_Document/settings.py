@@ -59,7 +59,7 @@ ROOT_URLCONF = 'Smart_Document.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'Smart_Document/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

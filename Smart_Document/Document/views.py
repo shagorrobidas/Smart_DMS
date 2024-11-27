@@ -14,7 +14,7 @@ class SubmissionCreateView(CreateView):
 
 class ListDocumentView(TemplateView):
     template_name = "home.html"
-    
+
 
 class AssignmentCoverPageView(TemplateView):
     template_name = "assignment_report.html"

@@ -99,6 +99,46 @@
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
             transform: translateY(0);
         }
+        .hidden {
+            display: none;
+        }
+
+        #loader {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        #loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #loader p {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -197,16 +237,25 @@
         </div>
     
         <div class="form-group">
-            <a class="custom-button" href="#">Genarate</a>
+            <a id="assignment-btn" class="custom-button hidden" href="{% url 'submission_assignment' %}">Generate Assignment</a>
+            <a id="labreport-btn" class="custom-button hidden" href="{% url 'submission_labreport' %}">Generate Lab Report</a>
+        </div>
+
+        <div id="loader" class="hidden">
+            <div class="spinner"></div>
+            <p>Loading...</p>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            const $pageSelect = $('#page-select'); // Correctly targets the select element
+            const $pageSelect = $('#page-select');
             const $assignment = $('#assignment');
             const $labreport = $('#labreport');
             const $labreportExperiment = $('#labreport-experiment');
+            const $assignmentBtn = $('#assignment-btn');
+            const $labreportBtn = $('#labreport-btn');
+            const $loader = $('#loader');
     
             $pageSelect.on('change', function () {
                 const selectedValue = $pageSelect.val();
@@ -215,18 +264,33 @@
                     $assignment.removeClass('hidden');
                     $labreport.addClass('hidden');
                     $labreportExperiment.addClass('hidden');
+                    $assignmentBtn.removeClass('hidden');
+                    $labreportBtn.addClass('hidden');
                 } else if (selectedValue === 'labreport') {
                     $labreport.removeClass('hidden');
                     $labreportExperiment.removeClass('hidden');
                     $assignment.addClass('hidden');
+                    $labreportBtn.removeClass('hidden');
+                    $assignmentBtn.addClass('hidden');
                 } else {
                     $assignment.addClass('hidden');
                     $labreport.addClass('hidden');
                     $labreportExperiment.addClass('hidden');
+                    $assignmentBtn.addClass('hidden');
+                    $labreportBtn.addClass('hidden');
                 }
             });
+
+            $('.custom-button').on('click', function (e) {
+                e.preventDefault(); // Prevent immediate navigation
+                const url = $(this).attr('href'); // Get the target URL
+                $loader.removeClass('hidden'); // Show the loader
+                setTimeout(() => {
+                    window.location.href = url; // Navigate to the target page
+                }, 1000); 
         });
     </script>
+
 </body>
 
 </html>

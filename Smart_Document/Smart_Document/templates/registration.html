@@ -67,6 +67,12 @@
 
 </head>
 <body>
+	<form action="" method="POST">
+		{% csrf_token %}
+    	{{ form.as_p }}
+    <button type="submit">Register</button>
+	</form>
+	{% comment %}
 	<div class="container h-100">
 		<div class="d-flex justify-content-center h-100">
 			<div class="user_card">
@@ -76,6 +82,7 @@
 				<div class="d-flex justify-content-center form_container">
 
 					<form method="POST" action="">
+						{% csrf_token %}
 						<div class="input-group mb-3">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -131,5 +138,7 @@
 			form_fields[field].className += ' form-control'
 		}
 	</script>
+	{% endcomment %}
+
 </body>
 </html>

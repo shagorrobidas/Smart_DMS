@@ -5,6 +5,10 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from Document.views import ListDocumentView
+from .views import (
+    LoginView,
+    RegistrationView
+)
 
 
 urlpatterns = [
@@ -12,20 +16,36 @@ urlpatterns = [
         'manage/',
         admin.site.urls
     ),
-    path('api/', include('API.urls')),
+    path(
+        'api/',
+        include('API.urls')
+    ),
 
-    path('recipes/', receipes, name="home"),
+    path(
+        'recipes/',
+        receipes,
+        name="home"
+    ),
     path('delete-recipes/<id>', delete_receipes, name="delete_recipes"),
     path(
         'document/',
         include('Document.urls')
     ),
     path(
-        '',
+        'index/',
         ListDocumentView.as_view(),
         name='submission_create'
-        ),
-
+    ),
+    path(
+        '',
+        LoginView.as_view(),
+        name='login'
+    ),
+    path(
+        'registration/',
+        RegistrationView.as_view(),
+        name='registration'
+    ),
 ]
 
 if settings.DEBUG:

@@ -1,8 +1,9 @@
 from django.urls import path
 from .views import (
     SubmissionCreateView,
-    CoverPageView,
-    createFromView
+    AssignmentCoverPageView,
+    LabCoverPageView,
+    createFromView,
 )
 
 urlpatterns = [
@@ -12,9 +13,14 @@ urlpatterns = [
         name='submission_create'
     ),
     path(
-        'submission/coverpage/',
-        CoverPageView.as_view(),
-        name='submission_create'
+        'submission/assignment/',
+        AssignmentCoverPageView.as_view(),
+        name='submission_assignment'
+        ),
+    path(
+        'submission/labreport/',
+        LabCoverPageView.as_view(),
+        name='submission_labreport'
         ),
     path(
         'submission/create/',

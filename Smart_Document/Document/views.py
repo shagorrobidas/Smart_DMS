@@ -14,10 +14,14 @@ class SubmissionCreateView(CreateView):
 
 class ListDocumentView(TemplateView):
     template_name = "home.html"
-    
 
-class CoverPageView(TemplateView):
-    template_name = "report.html"
+
+class AssignmentCoverPageView(TemplateView):
+    template_name = "assignment_report.html"
+
+
+class LabCoverPageView(TemplateView):
+    template_name = "labreport_cover.html"
 
 
 class createFromView(TemplateView):

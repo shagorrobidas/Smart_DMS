@@ -1,5 +1,5 @@
 # https://docs.djangoproject.com/en/5.1/ref/contrib/messages/#using-messages-in-views-and-templates
-from django.shortcuts import redirect, render
+# from django.shortcuts import redirect, render
 from django.views.generic import (
     TemplateView,
     FormView

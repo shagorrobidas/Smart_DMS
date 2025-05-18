@@ -1,8 +1,9 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListCreateAPIView
 from Document.models import Department
 from Document.api.serializers import DepartmentSerializer
 
 
-class DepatmentListView(ListAPIView):
+class DepatmentListCreateAPIView(ListCreateAPIView):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
+    

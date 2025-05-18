@@ -51,10 +51,6 @@ class Department(models.Model):
         blank=True,
         null=True
     )
-    programs = models.ManyToManyField(
-        Program,
-        blank=True
-    )
 
     def __str__(self):
         return self.name

@@ -3,7 +3,8 @@ from django.urls import path, include
 from Document.api.views import (
     DepatmentListCreateAPIView,
     TemplateListCreateAPIView,
-    PositionListCreateAPIView
+    PositionListCreateAPIView,
+    UniversityListCreateAPIView,
 )
 
 
@@ -28,6 +29,12 @@ urlpatterns = [
         PositionListCreateAPIView.as_view(),
         name='position_api'
     ),
+    path(
+        'v1/university/',
+        UniversityListCreateAPIView.as_view(),
+        name='university_api'
+    ),
+
 
     # router ------------------------------------------------------------------
     path('', include(router.urls)),

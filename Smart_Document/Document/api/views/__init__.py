@@ -1,6 +1,6 @@
-from .depatment_views import DepatmentListView
+from Document.api.views.depatment_views import DepatmentListCreateAPIView
 
 
 __all__ = [
-    DepatmentListView,
+    DepatmentListCreateAPIView,
 ]

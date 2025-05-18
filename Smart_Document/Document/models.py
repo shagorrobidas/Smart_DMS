@@ -140,10 +140,10 @@ class Course(models.Model):
 
 
 class Template(models.Model):
-    type = models.CharField(
+    title = models.CharField(
         max_length=100
     )
-    temp_id = models.IntegerField()
+    code = models.IntegerField()
 
     def __str__(self):
         return self.type

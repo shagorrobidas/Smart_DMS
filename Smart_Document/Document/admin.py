@@ -38,3 +38,8 @@ class DepartmentAdmin(admin.ModelAdmin):
 class PositionAdmin(admin.ModelAdmin):
     list_display = ('title', 'position_code')
     search_fields = ('title',)
+
+
+class TemplateAdmin(admin.ModelAdmin):
+    list_display = ('title', 'code')
+    search_fields = ('title',)

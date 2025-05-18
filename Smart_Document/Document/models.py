@@ -146,7 +146,7 @@ class Template(models.Model):
     code = models.IntegerField()
 
     def __str__(self):
-        return self.type
+        return self.title
 
 
 class Experiment(models.Model):

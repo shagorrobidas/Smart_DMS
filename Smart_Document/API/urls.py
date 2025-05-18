@@ -1,6 +1,7 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
-from Document.api.views.depatment_views import DepatmentListCreateAPIView
+from Document.api.views import DepatmentListCreateAPIView, TemplateListCreateAPIView
+
 
 router = DefaultRouter()
 
@@ -12,7 +13,12 @@ urlpatterns = [
         'v1/depatment/',
         DepatmentListCreateAPIView.as_view(),
         name='depatment_api'
-        ),
+    ),
+    path(
+        'v1/template/',
+        TemplateListCreateAPIView.as_view(),
+        name='template_api'
+    ),
 
 
     # router ------------------------------------------------------------------

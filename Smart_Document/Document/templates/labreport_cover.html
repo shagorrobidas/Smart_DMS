@@ -1,159 +1,53 @@
+{% extends 'coverpage_layout.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab Report</title>
-    <style>
-        /* Set up A4 dimensions */
-        @page {
-            size: A4;
-            margin: 20mm;
-        }
-        
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            box-sizing: border-box;
-            margin-top: 20px;
-        }
-
-        .container {
-            width: 180mm; /* A4 width minus margins */
-            height: 257mm; /* A4 height minus margins */
-            border: 1px solid black;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-            box-sizing: border-box;
-        }
-
-        .header h3{
-            margin: 57px 0px 0px 0px;
-            font-size: 17px;
-            text-transform: uppercase;
-            font-weight: 900;
-        }
-
-        .logo {
-            margin-top: 10px;
-            width: 80px;
-            height: auto;
-        }
-
-        .assignment-title {
-            border: 1px solid black;
-            display: inline-block;
-            padding: 5px 15px;
-            font-weight: bold;
-            font-size: 18px;
-            margin: 20px 0;
-        }
-
-        .info-table {
-            margin-top: 20px;
-            text-align: left;
-            margin-left: 25%;
-        }
-
-        .info-table td {
-            padding: 5px;
-        }
-
-        .submission-section {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 100px;
-        }
-
-        .box {
-            width: 45%;
-            border: 1px solid black;
-            padding: 10px;
-            text-align: left;
-            box-sizing: border-box;
-            border-radius: 15px;
-        }
-
-        .box h3 {
-            margin-top: 0;
-            font-size: 16px;
-            text-align: center;
-        }
-
-        .box p {
-            margin: 5px 0;
-        }
-
-        .date-section {
-            margin-top: 114px;
-            text-align: center;
-        }
-    </style>
-</head>
-<body >
+{% block title %}Lab Report{% endblock %}
+{% block content %}
     <div class="container">
         <div class="header">
-            <h3>Bangladesh University of Business & Technology</h3>
-            <img src="{% static 'images/logo.png' %}" alt="University Logo" class="logo">
+            <h3>{{ university.name }}</h3>
+            {% if university.logo_path %}
+                <img src="{{ university.logo_path.url }}" alt="University Logo" class="logo">
+            {% endif %}
         </div>
         <div class="assignment-title">Lab Report</div>
         <table class="info-table">
             <tr>
-                <td>Course Code : 
-                    <span>
-                        CSE 215
-                    </span>
-                </td>
-                
+                <td>Course Code : <span>{{ course_code }}</span></td>
             </tr>
             <tr>
-                <td>Course Title : 
-                    <span>
-                        Database system
-                    </span>
-                </td>
+                <td>Course Title : <span>{{ course_title }}</span></td>
             </tr>
             <tr>
-                <td>Name of Expriment : 
-                    <span>
-                        design a bank database
-                    </span>
-                </td>
+                <td>Experiment Name : <span>{{ labreport_name }}</span></td>
             </tr>
             <tr>
-                <td>Expriment NO : 
-                    <span>
-                        01
-                    </span>
-                </td>
+                <td>Experiment No : <span>{{ labreport_experiment }}</span></td>
             </tr>
         </table>
         <div class="submission-section">
             <div class="box">
                 <h3>Submitted By :</h3>
-                <p>Name : Shagor Robidas</p>
-                <p>ID No : 20234203067</p>
-                <p>Intake : 45</p>
-                <p>Section : 02</p>
-                <p>Program : B.Sc Engg in CSE</p>
+                <p>Name : {{ student_name }}</p>
+                <p>ID No : {{ student_id }}</p>
+                <p>Intake : {{ intake }}</p>
+                <p>Section : {{ section }}</p>
+                <p>Program : {{ student_department.name }}</p>
             </div>
             <div class="box">
                 <h3>Submitted To : </h3>
-                <p>Name : Yasin Anik</p>
-                <p>Dept:CSE </p>
-                <p>Bangladesh University of Business & Technology</p>
+                <p>Name : {{ teacher_name }}</p>
+                <p>Dept: {{ faculty_department.name }}</p>
+                <p>{{ university.name }}</p>
             </div>
         </div>
         <div class="date-section">
-            <p>Date of Submission : 13/11/2024</p>
+            <div class="date">
+                <p>Date of Submission : {{ date }}</p>
+            </div>
+            <div class="signature">
+                <p>Signature of Teacher  </p>
+            </div>
+            
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

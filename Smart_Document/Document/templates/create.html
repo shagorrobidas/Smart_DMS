@@ -149,141 +149,133 @@
 
 {% block content %}
     <div class="form-container">
-        <div class="main-title">Cover Page</div>
-        
-        <form action="" method="post">
-            {% csrf_token %}
-            <div class="section-title">Course Information</div>
-            <div class="form-group">
-                <i class="fas fa-folder"></i>
-                <select id="page-select" name="page_type" class="form-control select2">
-                    {%for template in templates%}
-                        <option value="">Select Template</option>
-                        <option value="{{template.id}}">{{template.title}}</option>
-                    {%endfor%}
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <i class="fas fa-code"></i>
-                <input type="text" name="course_code" placeholder="Course Code">
-            </div>
-            
-            <div class="form-group">
-                <i class="fas fa-font"></i>
-                <input type="text" name="course_title" placeholder="Course Title">
-            </div>
-
-            <div id="assignment" class="form-group hidden">
-                <i class="fas fa-hashtag"></i>
-                <input type="number" name="assignment_no" placeholder="Assignment No">
-            </div>
-
-            <!-- Lab Report Section -->
-            <div id="labreport" class="form-group hidden">
-                <i class="fas fa-pen"></i>
-                <input type="text" name="labreport_name" placeholder="Lab Exp Name">
-            </div>
-
-            <div id="labreport-experiment" class="form-group hidden">
-                <i class="fas fa-hashtag"></i>
-                <input type="number" name="labreport_experiment" placeholder="Number of Experiment">
-            </div>
-
-            <div class="section-title">University Information</div>
-            <div class="form-group">
-                <i class="fas fa-university"></i>
-                <select name="university" class="form-control select2">
-                    {%for university in universities%}
-                        <option value="">Select University</option>
-                        <option value="{{university.id}}">{{university.name}}</option>
-                    {%endfor%}
-                </select>
-            </div>
-
-            <div class="section-title">Faculty Information</div>
-
-            <div class="form-group">
-                <i class="fas fa-user"></i>
-                <input type="text" name="teacher_name" placeholder="Teacher Name">
-            </div>
-
-            <div class="form-group">
-                <i class="fas fa-graduation-cap"></i>
-                <select name="faculty_department" class="form-control select2">
-                    {%for department in departments%}
-                        <option value="">Select Department</option>
-                        <option value="{{department.id}}">{{department.name}}</option>
-                    {%endfor%}
-                </select>
-            </div>
-
-            <div class="form-group">
-                <i class="fas fa-clipboard"></i>
-                <select name="faculty_position" class="form-control select2">
-                    {%for position in positions%}
-                        <option value="">Select Position</option>
-                        <option value="{{position.id}}">{{position.title}}</option>
-                    {%endfor%}
-                </select>
-            </div>
-        
-            <div class="section-title">Student Information</div>
-
-            <div class="form-group">
-                <i class="fas fa-user"></i>
-                <input type="text" name="student_name" placeholder="Name">
-            </div>
-
-            <div class="form-group">
-                <i class="fas fa-id-card"></i>
-                <input type="text" name="student_id" placeholder="Student ID">
-            </div>
-
-            <div class="form-group">
-                <i class="fas fa-users"></i>
-                <input type="text" name="intake" placeholder="Intake">
-            </div>
-
-            <div class="form-group">
-                <i class="fas fa-layer-group"></i>
-                <input type="text" name="section" placeholder="Section">
-            </div>
-
-            <div class="form-group">
-                <i class="fas fa-graduation-cap"></i>
-                <select id="student-department" name="student_department" class="form-control select2">
-                    {%for department in departments%}
-                        <option value="">Select Department</option>
-                        <option value="{{department.id}}">{{department.name}}</option>
-                    {%endfor%}
-                </select>
-            </div>
-            <div class="form-group">
-                <i class="fa-regular fa-calendar-days"></i>
-                <input type="date" name="date" class="form-control" placeholder="Date">
-            </div>
-        
-            <div class="form-group">
-                {% comment %}
-                <button type="submit" name="action" value="assignment" id="assignment-btn"  class="custom-button hidden" href="{% url 'submission_assignment' %}">Generate Assignment</button>
-                <button type="submit" name="action" value="labreport" id="labreport-btn" class="custom-button hidden" href="{% url 'submission_labreport' %}">Generate Lab Report</button>
-                {% endcomment %}
-                <button type="submit" name="action" value="assignment" id="assignment-btn" class="custom-button hidden">Generate Assignment</button>
-                <button type="submit" name="action" value="labreport" id="labreport-btn" class="custom-button hidden">Generate Lab Report</button>
-                
-            </div>
-        </form>
-
-        <div id="loader" class="hidden">
-            <div class="spinner"></div>
-            <p>Loading...</p>
+    <div class="main-title">Cover Page</div>
+    
+    <form action="" method="post" id="coverpage-form">
+        {% csrf_token %}
+        <div class="section-title">Course Information</div>
+        <div class="form-group">
+            <i class="fas fa-folder"></i>
+            <select id="page-select" name="page_type" class="form-control select2" required>
+                <option value="">Select Template</option>
+                {% for template in templates %}
+                    <option value="{{template.id}}">{{template.title}}</option>
+                {% endfor %}
+            </select>
         </div>
+        
+        <div class="form-group">
+            <i class="fas fa-code"></i>
+            <input type="text" name="course_code" placeholder="Course Code" required>
+        </div>
+        
+        <div class="form-group">
+            <i class="fas fa-font"></i>
+            <input type="text" name="course_title" placeholder="Course Title" required>
+        </div>
+
+        <div id="assignment" class="form-group hidden">
+            <i class="fas fa-hashtag"></i>
+            <input type="number" name="assignment_no" placeholder="Assignment No">
+        </div>
+
+        <div id="labreport" class="form-group hidden">
+            <i class="fas fa-pen"></i>
+            <input type="text" name="labreport_name" placeholder="Lab Exp Name">
+        </div>
+
+        <div id="labreport-experiment" class="form-group hidden">
+            <i class="fas fa-hashtag"></i>
+            <input type="number" name="labreport_experiment" placeholder="Number of Experiment">
+        </div>
+
+        <div class="section-title">University Information</div>
+        <div class="form-group">
+            <i class="fas fa-university"></i>
+            <select name="university" class="form-control select2" required>
+                <option value="">Select University</option>
+                {% for university in universities %}
+                    <option value="{{university.id}}">{{university.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="section-title">Faculty Information</div>
+        <div class="form-group">
+            <i class="fas fa-user"></i>
+            <input type="text" name="teacher_name" placeholder="Teacher Name" required>
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-graduation-cap"></i>
+            <select name="faculty_department" class="form-control select2" required>
+                <option value="">Select Department</option>
+                {% for department in departments %}
+                    <option value="{{department.id}}">{{department.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-clipboard"></i>
+            <select name="faculty_position" class="form-control select2" required>
+                <option value="">Select Position</option>
+                {% for position in positions %}
+                    <option value="{{position.id}}">{{position.title}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    
+        <div class="section-title">Student Information</div>
+        <div class="form-group">
+            <i class="fas fa-user"></i>
+            <input type="text" name="student_name" placeholder="Name" required>
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-id-card"></i>
+            <input type="text" name="student_id" placeholder="Student ID" required>
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-users"></i>
+            <input type="text" name="intake" placeholder="Intake" required>
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-layer-group"></i>
+            <input type="text" name="section" placeholder="Section" required>
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-graduation-cap"></i>
+            <select id="student-department" name="student_department" class="form-control select2" required>
+                <option value="">Select Department</option>
+                {% for department in departments %}
+                    <option value="{{department.id}}">{{department.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <i class="fa-regular fa-calendar-days"></i>
+            <input type="date" name="date" class="form-control" placeholder="Date" required>
+        </div>
+    
+        <div class="form-group">
+            <button type="submit" name="action" value="assignment" id="assignment-btn" class="custom-button hidden">Generate Assignment</button>
+            <button type="submit" name="action" value="labreport" id="labreport-btn" class="custom-button hidden">Generate Lab Report</button>
+        </div>
+    </form>
+
+    <div id="loader" class="hidden">
+        <div class="spinner"></div>
+        <p>Loading...</p>
     </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
-
 
 <script>
     $(document).ready(function () {
@@ -302,21 +294,34 @@
         const $assignmentBtn = $('#assignment-btn');
         const $labreportBtn = $('#labreport-btn');
         const $loader = $('#loader');
-    
+        const $form = $('#coverpage-form');
+
         // Initialize with loader hidden
         $loader.addClass('hidden');
-    
-        // Dropdown change event - no loader interaction here
+
+        // Show loader if no template is selected on page load
+        if ($pageSelect.val() === "") {
+            $loader.removeClass('hidden');
+        }
+
+        // Dropdown change event
         $pageSelect.on('change', function () {
-            const selectedValue = $pageSelect.val();
-    
-            if (selectedValue === '3') {
+            const selectedValue = $(this).val();
+
+            // Hide loader when a template is selected
+            if (selectedValue !== "") {
+                $loader.addClass('hidden');
+            } else {
+                $loader.removeClass('hidden');
+            }
+
+            if (selectedValue === '3') {  // Assuming 3 is assignment
                 $assignment.removeClass('hidden');
                 $labreport.addClass('hidden');
                 $labreportExperiment.addClass('hidden');
                 $assignmentBtn.removeClass('hidden');
                 $labreportBtn.addClass('hidden');
-            } else if (selectedValue === '2') {
+            } else if (selectedValue === '2') {  // Assuming 2 is labreport
                 $labreport.removeClass('hidden');
                 $labreportExperiment.removeClass('hidden');
                 $assignment.addClass('hidden');
@@ -330,27 +335,58 @@
                 $labreportBtn.addClass('hidden');
             }
         });
-    
-        // Button click handler - only show loader here
-        $('.custom-button').on('click', function (e) {
+
+        // Form submission handler
+        $form.on('submit', function (e) {
             e.preventDefault();
             
-            // First validate selection
             if ($pageSelect.val() === "") {
                 alert("Please select a page type first!");
-                return;
+                return false;
             }
             
-            const url = $(this).attr('href');
             $loader.removeClass('hidden');
             
-            setTimeout(() => {
-                window.location.href = url;
-            }, 1000);
+            const pageType = $pageSelect.val();
+            let url;
+            if (pageType === '3') {  // Assignment
+                url = "{% url 'submission_assignment' %}";
+            } else if (pageType === '2') {  // Lab report
+                url = "{% url 'submission_labreport' %}";
+            } else {
+                alert("Invalid page type selected!");
+                return false;
+            }
+            
+            // Create a new form element to submit via POST
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = url;
+            form.style.display = 'none';
+            
+            // Add all form data to the new form
+            $(this).find('input, select, textarea').each(function() {
+                if (this.name) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = this.name;
+                    input.value = $(this).val();
+                    form.appendChild(input);
+                }
+            });
+            
+            // Add CSRF token
+            const csrf = document.createElement('input');
+            csrf.type = 'hidden';
+            csrf.name = 'csrfmiddlewaretoken';
+            csrf.value = '{{ csrf_token }}';
+            form.appendChild(csrf);
+            
+            document.body.appendChild(form);
+            form.submit();
         });
     });
 </script>
-
 {% endblock %}
 
 

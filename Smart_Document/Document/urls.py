@@ -3,7 +3,7 @@ from .views import (
     SubmissionCreateView,
     AssignmentCoverPageView,
     LabCoverPageView,
-    createFromView,
+    CoverPageFormView,
 )
 
 urlpatterns = [
@@ -24,8 +24,8 @@ urlpatterns = [
         ),
     path(
         'submission/create/',
-        createFromView.as_view(),
-        name='assignment_create'
-        ),
+        CoverPageFormView.as_view(),
+        name='coverpage_create'
+    ),
 
 ]

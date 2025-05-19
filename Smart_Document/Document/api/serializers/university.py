@@ -3,6 +3,7 @@ from Document.models import University
 
 
 class UniversitySerializer(serializers.ModelSerializer):
+
     class Meta:
         model = University
         fields = (

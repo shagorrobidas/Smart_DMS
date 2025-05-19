@@ -1,8 +1,12 @@
 # views.py
+import logging
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
 from .models import Submission
 from .forms import SubmissionForm
+
+logger = logging.getLogger(__name__)
+from .models import University, Department, Position, Template
 
 
 class SubmissionCreateView(CreateView):
@@ -24,5 +28,21 @@ class LabCoverPageView(TemplateView):
     template_name = "labreport_cover.html"
 
 
-class createFromView(TemplateView):
+class CoverPageFormView(TemplateView):
     template_name = "create.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['universities'] = University.objects.all()
+        context['departments'] = Department.objects.all()
+        context['positions'] = Position.objects.all()
+        context['templates'] = Template.objects.all()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        page_type = request.POST.get('page_type')
+        print(f"Page Type: {page_type}")
+        university_name = request.POST.get('university')
+        print(f"University Name: {university_name}")
+        logger.info(f"{'*' * 10} university_name {university_name}")
+

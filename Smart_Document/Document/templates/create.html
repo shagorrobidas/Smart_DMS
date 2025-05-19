@@ -148,106 +148,109 @@
 {% endblock %}
 
 {% block content %}
-
     <div class="form-container">
         <div class="main-title">Cover Page</div>
-
-        <div class="section-title">Course Information</div>
-        <div class="form-group">
-            <i class="fas fa-folder"></i>
-            <select id="page-select" class="form-control templateDropdown">
-                
-            </select>
-        </div>
         
-        <div class="form-group">
-            <i class="fas fa-code"></i>
-            <input type="text" placeholder="Course Code">
-        </div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="section-title">Course Information</div>
+            <div class="form-group">
+                <i class="fas fa-folder"></i>
+                <select id="page-select" name="page_type" class="form-control ">
+                    {%for template in templates%}
+                        <option value="{{template.id}}">{{template.title}}</option>
+                    {%endfor%}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <i class="fas fa-code"></i>
+                <input type="text" name="course_code" placeholder="Course Code">
+            </div>
+            
+            <div class="form-group">
+                <i class="fas fa-font"></i>
+                <input type="text" name="course_title" placeholder="Course Title">
+            </div>
+
+            <div id="assignment" class="form-group hidden">
+                <i class="fas fa-hashtag"></i>
+                <input type="number" name="assignment_no" placeholder="Assignment No">
+            </div>
+
+            <!-- Lab Report Section -->
+            <div id="labreport" class="form-group hidden">
+                <i class="fas fa-pen"></i>
+                <input type="text" name="labreport_name" placeholder="Lab Exp Name">
+            </div>
+
+            <div id="labreport-experiment" class="form-group hidden">
+                <i class="fas fa-hashtag"></i>
+                <input type="number" name="labreport_experiment" placeholder="Number of Experiment">
+            </div>
+
+            <div class="section-title">University Information</div>
+            <div class="form-group">
+                <i class="fas fa-university"></i>
+                <select name="university" class="form-control universityDropdown">
+                    <option value="">Select University</option> 
+                </select>
+            </div>
+
+            <div class="section-title">Faculty Information</div>
+
+            <div class="form-group">
+                <i class="fas fa-user"></i>
+                <input type="text" name="teacher_name" placeholder="Teacher Name">
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-graduation-cap"></i>
+                <select id="faculty-department" name="faculty_department" class="form-control departmentDropdown">
+                </select>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-clipboard"></i>
+                <select id="faculty-position" name="faculty_position" class="form-control positionDropdown"></select>
+            </div>
         
-        <div class="form-group">
-            <i class="fas fa-font"></i>
-            <input type="text" placeholder="Course Title">
-        </div>
+            <div class="section-title">Student Information</div>
 
-        <div id="assignment" class="form-group hidden">
-            <i class="fas fa-hashtag"></i>
-            <input type="number" placeholder="Number of Assignment">
-        </div>
+            <div class="form-group">
+                <i class="fas fa-user"></i>
+                <input type="text" name="student_name" placeholder="Name">
+            </div>
 
-        <!-- Lab Report Section -->
-        <div id="labreport" class="form-group hidden">
-            <i class="fas fa-pen"></i>
-            <input type="text" placeholder="Lab Exp Name">
-        </div>
+            <div class="form-group">
+                <i class="fas fa-id-card"></i>
+                <input type="text" name="student_id" placeholder="Student ID">
+            </div>
 
-        <div id="labreport-experiment" class="form-group hidden">
-            <i class="fas fa-hashtag"></i>
-            <input type="number" placeholder="Number of Experiment">
-        </div>
+            <div class="form-group">
+                <i class="fas fa-users"></i>
+                <input type="text" name="intake" placeholder="Intake">
+            </div>
 
-        <div class="section-title">University Information</div>
-        <div class="form-group">
-            <i class="fas fa-university"></i>
-            <select name="university" id="university" class="form-control universityDropdown">
-                <option value="">Select University</option> 
-            </select>
-        </div>
+            <div class="form-group">
+                <i class="fas fa-layer-group"></i>
+                <input type="text" name="section" placeholder="Section">
+            </div>
 
-        <div class="section-title">Faculty Information</div>
-
-        <div class="form-group">
-            <i class="fas fa-user"></i>
-            <input type="text" placeholder="Teacher Name">
-        </div>
-
-        <div class="form-group">
-            <i class="fas fa-graduation-cap"></i>
-            <select id="faculty-department" class="form-control departmentDropdown">
-            </select>
-        </div>
-
-        <div class="form-group">
-            <i class="fas fa-clipboard"></i>
-            <select id="faculty-position" class="form-control positionDropdown">
-            </select>
-        </div>
-    
-        <div class="section-title">Student Information</div>
-
-        <div class="form-group">
-            <i class="fas fa-user"></i>
-            <input type="text" placeholder="Name">
-        </div>
-
-        <div class="form-group">
-            <i class="fas fa-id-card"></i>
-            <input type="text" placeholder="Student ID">
-        </div>
-
-        <div class="form-group">
-            <i class="fas fa-users"></i>
-            <input type="text" placeholder="Intake">
-        </div>
-
-        <div class="form-group">
-            <i class="fas fa-layer-group"></i>
-            <input type="text" placeholder="Section">
-        </div>
-
-        <div class="form-group">
-            <i class="fas fa-graduation-cap"></i>
-            <select id="student-department" class="form-control departmentDropdown"></select>
-        </div>
-        <div class="form-group">
-            <i class="fa-regular fa-calendar-days"></i>
-            <input type="date" placeholder="Name of Program">
-        </div>
-    
-        <div class="form-group">
-            <a id="assignment-btn" class="custom-button hidden" href="{% url 'submission_assignment' %}">Generate Assignment</a>
-            <a id="labreport-btn" class="custom-button hidden" href="{% url 'submission_labreport' %}">Generate Lab Report</a>
-        </div>
+            <div class="form-group">
+                <i class="fas fa-graduation-cap"></i>
+                <select id="student-department" name="student_department" class="form-control departmentDropdown"></select>
+            </div>
+            <div class="form-group">
+                <i class="fa-regular fa-calendar-days"></i>
+                <input type="date" name="date" class="form-control" placeholder="Date">
+            </div>
+        
+            <div class="form-group">
+                <button type="submit" id="assignment-btn"  class="custom-button hidden" href="{% url 'submission_assignment' %}">Generate Assignment</button>
+                <button type="submit" id="labreport-btn" class="custom-button hidden" href="{% url 'submission_labreport' %}">Generate Lab Report</button>
+            </div>
+        </form>
 
         <div id="loader" class="hidden">
             <div class="spinner"></div>

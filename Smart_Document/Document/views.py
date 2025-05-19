@@ -32,6 +32,7 @@ class CoverPageFormView(TemplateView):
     template_name = "create.html"
 
     def get_context_data(self, **kwargs):
+        print("get_context_data")
         context = super().get_context_data(**kwargs)
         context['universities'] = University.objects.all()
         context['departments'] = Department.objects.all()
@@ -40,9 +41,19 @@ class CoverPageFormView(TemplateView):
         return context
 
     def post(self, request, *args, **kwargs):
+        print("post")
         page_type = request.POST.get('page_type')
         print(f"Page Type: {page_type}")
+        course_code = request.POST.get('course_code')
+        print(f"Course Code: {course_code}")
         university_name = request.POST.get('university')
         print(f"University Name: {university_name}")
         logger.info(f"{'*' * 10} university_name {university_name}")
+
+        if page_type == 'assignment':
+            print("Assignment button clicked")
+            
+        elif page_type == 'labreport':
+            print("Lab Report button clicked")
+            
 

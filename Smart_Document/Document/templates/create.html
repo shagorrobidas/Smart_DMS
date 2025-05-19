@@ -156,8 +156,9 @@
             <div class="section-title">Course Information</div>
             <div class="form-group">
                 <i class="fas fa-folder"></i>
-                <select id="page-select" name="page_type" class="form-control ">
+                <select id="page-select" name="page_type" class="form-control select2">
                     {%for template in templates%}
+                        <option value="">Select Template</option>
                         <option value="{{template.id}}">{{template.title}}</option>
                     {%endfor%}
                 </select>
@@ -192,8 +193,11 @@
             <div class="section-title">University Information</div>
             <div class="form-group">
                 <i class="fas fa-university"></i>
-                <select name="university" class="form-control universityDropdown">
-                    <option value="">Select University</option> 
+                <select name="university" class="form-control select2">
+                    {%for university in universities%}
+                        <option value="">Select University</option>
+                        <option value="{{university.id}}">{{university.name}}</option>
+                    {%endfor%}
                 </select>
             </div>
 
@@ -206,13 +210,22 @@
 
             <div class="form-group">
                 <i class="fas fa-graduation-cap"></i>
-                <select id="faculty-department" name="faculty_department" class="form-control departmentDropdown">
+                <select name="faculty_department" class="form-control select2">
+                    {%for department in departments%}
+                        <option value="">Select Department</option>
+                        <option value="{{department.id}}">{{department.name}}</option>
+                    {%endfor%}
                 </select>
             </div>
 
             <div class="form-group">
                 <i class="fas fa-clipboard"></i>
-                <select id="faculty-position" name="faculty_position" class="form-control positionDropdown"></select>
+                <select name="faculty_position" class="form-control select2">
+                    {%for position in positions%}
+                        <option value="">Select Position</option>
+                        <option value="{{position.id}}">{{position.title}}</option>
+                    {%endfor%}
+                </select>
             </div>
         
             <div class="section-title">Student Information</div>
@@ -239,7 +252,12 @@
 
             <div class="form-group">
                 <i class="fas fa-graduation-cap"></i>
-                <select id="student-department" name="student_department" class="form-control departmentDropdown"></select>
+                <select id="student-department" name="student_department" class="form-control select2">
+                    {%for department in departments%}
+                        <option value="">Select Department</option>
+                        <option value="{{department.id}}">{{department.name}}</option>
+                    {%endfor%}
+                </select>
             </div>
             <div class="form-group">
                 <i class="fa-regular fa-calendar-days"></i>
@@ -247,8 +265,13 @@
             </div>
         
             <div class="form-group">
-                <button type="submit" id="assignment-btn"  class="custom-button hidden" href="{% url 'submission_assignment' %}">Generate Assignment</button>
-                <button type="submit" id="labreport-btn" class="custom-button hidden" href="{% url 'submission_labreport' %}">Generate Lab Report</button>
+                {% comment %}
+                <button type="submit" name="action" value="assignment" id="assignment-btn"  class="custom-button hidden" href="{% url 'submission_assignment' %}">Generate Assignment</button>
+                <button type="submit" name="action" value="labreport" id="labreport-btn" class="custom-button hidden" href="{% url 'submission_labreport' %}">Generate Lab Report</button>
+                {% endcomment %}
+                <button type="submit" name="action" value="assignment" id="assignment-btn" class="custom-button hidden">Generate Assignment</button>
+                <button type="submit" name="action" value="labreport" id="labreport-btn" class="custom-button hidden">Generate Lab Report</button>
+                
             </div>
         </form>
 
@@ -262,6 +285,14 @@
 {% block extra_js %}
 
 
+<script>
+    $(document).ready(function () {
+        $('.select2').select2({
+            placeholder: '-----Select-----',
+            allowClear: true
+        });
+    });
+</script>
 <script>
     $(document).ready(function () {
         const $pageSelect = $('#page-select');
@@ -319,109 +350,7 @@
         });
     });
 </script>
-<script>
-    $(document).ready(function() {
-        $('.departmentDropdown').select2({
-            placeholder: "-----Select Department-----",
-            allowClear: true
-        });
-        $.ajax({
-            url: "{% url 'depatment_api' %}",
-            method: "GET",
-            dataType: "json",
-            success: function(data) {
-                $('.departmentDropdown').each(function() {
-                    const $dropdown = $(this);
-                    $dropdown.empty();
-                    $dropdown.append('<option value=""></option>');
-                    $.each(data, function(index, item) {
-                        $dropdown.append(`<option value="${item.id}">${item.name}</option>`);
-                    });
-                    $dropdown.trigger('change.select2');
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error("Failed to load departments:", error);
-            }
-        });
 
-        $('.templateDropdown').select2({
-            placeholder: "-----Select Template-----",
-            allowClear: true
-        });
-        
-        $.ajax({
-            url: "{% url 'template_api' %}",
-            method: "GET",
-            dataType: "json",
-            success: function(data) {
-                $('.templateDropdown').each(function() {
-                    const $dropdown = $(this);
-                    $dropdown.empty();
-                    $dropdown.append('<option value=""></option>');
-                    $.each(data, function(index, item) {
-                        $dropdown.append(`<option value="${item.id}">${item.title}</option>`);
-                    });
-                    $dropdown.trigger('change.select2');
-                });
-                console.log(data);
-            },
-            error: function(xhr, status, error) {
-                console.error("Failed to load departments:", error);
-            }
-        });
-
-        $('.positionDropdown').select2({
-            placeholder: "-----Select Position-----",
-            allowClear: true
-        });
-        $.ajax({
-            url: "{% url 'position_api' %}",
-            method: "GET",
-            dataType: "json",
-            success: function(data) {
-                $('.positionDropdown').each(function() {
-                    const $dropdown = $(this);
-                    $dropdown.empty();
-                    $dropdown.append('<option value=""></option>');
-                    $.each(data, function(index, item) {
-                        $dropdown.append(`<option value="${item.id}">${item.title}</option>`);
-                    });
-                    $dropdown.trigger('change.select2');
-                });
-                console.log(data);
-            },
-            error: function(xhr, status, error) {
-                console.error("Failed to load departments:", error);
-            }
-        });
-
-        $('.universityDropdown').select2({
-            placeholder: "-----Select University-----",
-            allowClear: true
-        });
-        $.ajax({
-            url: "{% url 'university_api' %}",
-            method: "GET",
-            dataType: "json",
-            success: function(data) {
-                $('.universityDropdown').each(function() {
-                    const $dropdown = $(this);
-                    $dropdown.empty();
-                    $dropdown.append('<option value=""></option>');
-                    $.each(data, function(index, item) {
-                        $dropdown.append(`<option value="${item.id}">${item.name}</option>`);
-                    });
-                    $dropdown.trigger('change.select2');
-                });
-                console.log(data);
-            },
-            error: function(xhr, status, error) {
-                console.error("Failed to load departments:", error);
-            }
-        });
-    });
-</script>
 {% endblock %}
 
 

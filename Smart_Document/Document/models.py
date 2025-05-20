@@ -25,7 +25,10 @@ class University(models.Model):
 
 class Program(models.Model):
     program_name = models.CharField(
-        max_length=100
+        max_length=100,
+        unique=True,
+        blank=True,
+        null=True
     )
     program_code = models.CharField(
         max_length=10,
@@ -44,7 +47,8 @@ class Program(models.Model):
 
 class Department(models.Model):
     name = models.CharField(
-        max_length=100
+        max_length=100,
+
     )
     department_code = models.CharField(
         max_length=10,

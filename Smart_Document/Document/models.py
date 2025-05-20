@@ -56,7 +56,7 @@ class Department(models.Model):
         null=True
     )
     short_name = models.CharField(
-        max_length=10,
+        max_length=50,
         blank=True,
         null=True
     )

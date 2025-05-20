@@ -344,9 +344,9 @@
                 alert("Please select a page type first!");
                 return false;
             }
-            
+
             $loader.removeClass('hidden');
-            
+
             const pageType = $pageSelect.val();
             let url;
             if (pageType === '3') {  // Assignment
@@ -357,7 +357,7 @@
                 alert("Invalid page type selected!");
                 return false;
             }
-            
+
             // Create a new form element to submit via POST
             const form = document.createElement('form');
             form.method = 'POST';

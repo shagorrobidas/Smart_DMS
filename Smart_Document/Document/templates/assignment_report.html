@@ -24,16 +24,17 @@
         </table>
         <div class="submission-section">
             <div class="box">
-                <p>Name : {{ student_name }}</p>
-                <p>ID No : {{ student_id }}</p>
-                <p>Intake : {{ intake }}</p>
-                <p>Section : {{ section }}</p>
-                <p>Program : {{ student_department.name }}</p>
+                <p>Name     : {{ student_name }}</p>
+                <p>ID No    : {{ student_id }}</p>
+                <p>Intake   : {{ intake }}</p>
+                <p>Section  : {{ section }}</p>
+                <p>Program  : {{ student_department.short_name }}</p>
             </div>
             <div class="box">
-                <h3>Submitted To : </h3>
+                <h3>Submitted To </h3>
                 <p>Name : {{ teacher_name }}</p>
-                <p>Dept: {{ faculty_department.name }}</p>
+                <p>({{ faculty_position.title }})</p>
+                <p>Dept : {{ faculty_department.short_name }}</p>
                 <p>{{ university.name }}</p>
             </div>
         </div>

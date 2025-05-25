@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from Smart_Document.jazzmin import CONFIG
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,12 +27,17 @@ SECRET_KEY = 'django-insecure-d-!afxtp5h^6-*gs##1j-ic=_ur9$)51(xm-o!2@g!ux11i+-a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +47,6 @@ INSTALLED_APPS = [
     'Document',
     'vege',
     'rest_framework',
-    # 'API',
 ]
 
 MIDDLEWARE = [
@@ -71,6 +76,23 @@ TEMPLATES = [
         },
     },
 ]
+
+JAZZMIN_SETTINGS = CONFIG
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING",
+    },
+}
 
 WSGI_APPLICATION = 'Smart_Document.wsgi.application'
 

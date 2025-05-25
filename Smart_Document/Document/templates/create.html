@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Layout</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% extends 'from_layout_base.html' %}
+{% load static %}
+{% block title %}Form Layout{% endblock %}
+
+{% block extra_css %}
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -100,7 +98,7 @@
             transform: translateY(0);
         }
         .hidden {
-            display: none;
+            display: none !important;
         }
 
         #loader {
@@ -139,158 +137,367 @@
             font-size: 16px;
             color: #333;
         }
+        .main-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
     </style>
-</head>
-<body>
+{% endblock %}
+
+{% block content %}
     <div class="form-container">
+    <div class="main-title">Cover Page</div>
+    
+    <form action="" method="post" id="coverpage-form">
+        {% csrf_token %}
+        <div class="section-title">Course Information</div>
         <div class="form-group">
             <i class="fas fa-folder"></i>
-            <select id="page-select">
-                <option value="">Select Page</option>
-                <option value="assignment">Assignment</option>
-                <option value="labreport">Lab Report</option>
+            <select id="page-select" name="page_type" class="form-control select2" required>
+                <option value="">Select Template</option>
+                {% for template in templates %}
+                    <option value="{{template.id}}">{{template.title}}</option>
+                {% endfor %}
             </select>
         </div>
         
         <div class="form-group">
             <i class="fas fa-code"></i>
-            <input type="text" placeholder="Course Code">
+            <input type="text" name="course_code" placeholder="Course Code" required>
         </div>
         
         <div class="form-group">
             <i class="fas fa-font"></i>
-            <input type="text" placeholder="Course Title">
+            <input type="text" name="course_title" placeholder="Course Title" required>
         </div>
 
         <div id="assignment" class="form-group hidden">
             <i class="fas fa-hashtag"></i>
-            <input type="number" placeholder="Number of Assignment">
+            <input type="number" name="assignment_no" placeholder="Assignment No">
         </div>
 
-        <!-- Lab Report Section -->
         <div id="labreport" class="form-group hidden">
             <i class="fas fa-pen"></i>
-            <input type="text" placeholder="Lab Exp Name">
+            <input type="text" name="labreport_name" placeholder="Lab Exp Name">
         </div>
 
         <div id="labreport-experiment" class="form-group hidden">
             <i class="fas fa-hashtag"></i>
-            <input type="number" placeholder="Number of Experiment">
+            <input type="number" name="labreport_experiment" placeholder="Number of Experiment">
+        </div>
+
+        <div class="section-title">University Information</div>
+        <div class="form-group">
+            <i class="fas fa-university"></i>
+            <select name="university" class="form-control" id="university-select" required>
+                <option value="">Select University</option>
+                {% for university in universities %}
+                    <option value="{{university.id}}">{{university.name}}</option>
+                {% endfor %}
+            </select>
         </div>
 
         <div class="section-title">Faculty Information</div>
-
         <div class="form-group">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Teacher Name">
-        </div>
-
-        <div class="form-group">
-            <i class="fas fa-sitemap"></i>
-            <input type="text" placeholder="Depatment">
-        </div>
-
-        <div class="form-group">
-            <i class="fas fa-clipboard"></i>
-            <select>
-                <option>Select Designation</option>
-                <option>Professor</option>
-                <option>Lecturer</option>
-                <option>Assistant Professor</option>
-            </select>
-        </div>
-    
-        <div class="section-title">Student Information</div>
-
-        <div class="form-group">
-            <i class="fas fa-user"></i>
-            <input type="text" placeholder="Name">
-        </div>
-
-        <div class="form-group">
-            <i class="fas fa-id-card"></i>
-            <input type="text" placeholder="Student ID">
-        </div>
-
-        <div class="form-group">
-            <i class="fas fa-users"></i>
-            <input type="text" placeholder="Intake">
-        </div>
-
-        <div class="form-group">
-            <i class="fas fa-layer-group"></i>
-            <input type="text" placeholder="Section">
+            <input type="text" name="teacher_name" placeholder="Teacher Name" required>
         </div>
 
         <div class="form-group">
             <i class="fas fa-graduation-cap"></i>
-            <select>
-                <option>Name of Program</option>
-                <option>Professor</option>
-                <option>Lecturer</option>
-                <option>Assistant Professor</option>
+            <select name="faculty_department" class="form-control select2" required>
+                <option value="">Select Department</option>
+                {% for department in departments %}
+                    <option value="{{department.id}}">{{department.name}}</option>
+                {% endfor %}
             </select>
         </div>
+
+        <div class="form-group">
+            <i class="fas fa-clipboard"></i>
+            <select name="faculty_position" class="form-control select2" required>
+                <option value="">Select Position</option>
+                {% for position in positions %}
+                    <option value="{{position.id}}">{{position.title}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    
+        <div class="section-title">Student Information</div>
+        <div class="form-group">
+            <i class="fas fa-user"></i>
+            <input type="text" name="student_name" placeholder="Name" required>
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-id-card"></i>
+            <input type="text" name="student_id" placeholder="Student ID" required>
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-users"></i>
+            <input type="text" name="intake" placeholder="Intake" required>
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-layer-group"></i>
+            <input type="text" name="section" placeholder="Section" required>
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-graduation-cap"></i>
+                <select id="student-department" name="student_department" class="form-control select2" required>
+                    <option value="">Select Department</option>
+                    {% for department in departments %}
+                        <option value="{{department.id}}">{{department.name}}</option>
+                    {% endfor %}
+                </select>
+        </div>
+        
         <div class="form-group">
             <i class="fa-regular fa-calendar-days"></i>
-            <input type="date" placeholder="Name of Program">
+            <input type="date" name="date" class="form-control" placeholder="Date" required>
         </div>
     
         <div class="form-group">
-            <a id="assignment-btn" class="custom-button hidden" href="{% url 'submission_assignment' %}">Generate Assignment</a>
-            <a id="labreport-btn" class="custom-button hidden" href="{% url 'submission_labreport' %}">Generate Lab Report</a>
+            <button type="submit" name="action" value="assignment" id="assignment-btn" class="custom-button hidden">Generate Assignment</button>
+            <button type="submit" name="action" value="labreport" id="labreport-btn" class="custom-button hidden">Generate Lab Report</button>
         </div>
+    </form>
 
-        <div id="loader" class="hidden">
-            <div class="spinner"></div>
-            <p>Loading...</p>
+    <div id="loader" class="hidden">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+</div>
+
+<!-- Modal  -->
+
+<div class="modal fade" id="addUniversityModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="addUniversityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addUniversityModalLabel">Create University</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="universityForm" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        <label for="{{ university_form.name.id_for_label }}" name="university_name" class="col-sm-3 col-form-label">University Name</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ university_form.name }}
+                        </div>
+                        <label for="{{ university_form.code.id_for_label }}" name="code" class="col-sm-3 col-form-label">Code</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ university_form.code }}
+                        </div>
+                        <label for="{{ university_form.location.id_for_label }}" name="code" class="col-sm-3 col-form-label">Location</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ university_form.location }}
+                        </div>
+                        <label for="{{ university_form.logo.id_for_label }}" name="logo" class="col-sm-3 col-form-label">Logo</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ university_form.logo }}
+                            <img id="logoPreview" src="#" alt="Logo Preview" class="img-fluid mt-2" style="display: none; max-height: 100px;" />
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            const $pageSelect = $('#page-select');
-            const $assignment = $('#assignment');
-            const $labreport = $('#labreport');
-            const $labreportExperiment = $('#labreport-experiment');
-            const $assignmentBtn = $('#assignment-btn');
-            const $labreportBtn = $('#labreport-btn');
-            const $loader = $('#loader');
-    
-            $pageSelect.on('change', function () {
-                const selectedValue = $pageSelect.val();
-    
-                if (selectedValue === 'assignment') {
-                    $assignment.removeClass('hidden');
-                    $labreport.addClass('hidden');
-                    $labreportExperiment.addClass('hidden');
-                    $assignmentBtn.removeClass('hidden');
-                    $labreportBtn.addClass('hidden');
-                } else if (selectedValue === 'labreport') {
-                    $labreport.removeClass('hidden');
-                    $labreportExperiment.removeClass('hidden');
-                    $assignment.addClass('hidden');
-                    $labreportBtn.removeClass('hidden');
-                    $assignmentBtn.addClass('hidden');
-                } else {
-                    $assignment.addClass('hidden');
-                    $labreport.addClass('hidden');
-                    $labreportExperiment.addClass('hidden');
-                    $assignmentBtn.addClass('hidden');
-                    $labreportBtn.addClass('hidden');
+</div>
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+$(document).ready(function() {
+    // Initialize select2 with "Add New" button
+    $('#university-select').select2({
+        language: {
+            noResults: function() {
+                return `
+                    <div>
+                        <span>No results found</span><br>
+                        <button class="btn btn-link p-0 mt-1" id="addUniversityBtn">Add New University</button>
+                    </div>
+                `;
+            }
+        },
+        escapeMarkup: function (markup) {
+            return markup;
+        }
+    });
+
+    // Show modal on "Add New University" click
+    $(document).on('click', '#addUniversityBtn', function() {
+        $('#addUniversityModal').modal('show');
+    });
+
+    // Submit university form via AJAX
+    $('#universityForm').submit(function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        $.ajax({
+            url: "{% url 'university_api' %}",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                console.log('University created successfully!');
+                
+                const newOption = new Option(response.name, response.id, false, true);
+                $('#university-select').append(newOption).trigger('change');
+
+                $('#universityForm')[0].reset();
+                $('#logoPreview').hide();
+                $('#addUniversityModal').modal('hide');
+            },
+            error: function(xhr) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+
+    // Logo preview
+    const input = document.querySelector('[name="logo"]');
+    const preview = document.getElementById('logoPreview');
+
+    input.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+            preview.src = '#';
+        }
+    });
+});
+</script>
+
+<script>
+    $(document).ready(function () {
+        const $pageSelect = $('#page-select');
+        const $assignment = $('#assignment');
+        const $labreport = $('#labreport');
+        const $labreportExperiment = $('#labreport-experiment');
+        const $assignmentBtn = $('#assignment-btn');
+        const $labreportBtn = $('#labreport-btn');
+        const $loader = $('#loader');
+        const $form = $('#coverpage-form');
+
+        // Initialize with loader hidden
+        $loader.addClass('hidden');
+
+        // Show loader if no template is selected on page load
+        if ($pageSelect.val() === "") {
+            $loader.removeClass('hidden');
+        }
+
+        // Dropdown change event
+        $pageSelect.on('change', function () {
+            const selectedValue = $(this).val();
+
+            // Hide loader when a template is selected
+            if (selectedValue !== "") {
+                $loader.addClass('hidden');
+            } else {
+                $loader.removeClass('hidden');
+            }
+
+            if (selectedValue === '3') {  // Assuming 3 is assignment
+                $assignment.removeClass('hidden');
+                $labreport.addClass('hidden');
+                $labreportExperiment.addClass('hidden');
+                $assignmentBtn.removeClass('hidden');
+                $labreportBtn.addClass('hidden');
+            } else if (selectedValue === '2') {  // Assuming 2 is labreport
+                $labreport.removeClass('hidden');
+                $labreportExperiment.removeClass('hidden');
+                $assignment.addClass('hidden');
+                $labreportBtn.removeClass('hidden');
+                $assignmentBtn.addClass('hidden');
+            } else {
+                $assignment.addClass('hidden');
+                $labreport.addClass('hidden');
+                $labreportExperiment.addClass('hidden');
+                $assignmentBtn.addClass('hidden');
+                $labreportBtn.addClass('hidden');
+            }
+        });
+
+        // Form submission handler
+        $form.on('submit', function (e) {
+            e.preventDefault();
+            
+            if ($pageSelect.val() === "") {
+                alert("Please select a page type first!");
+                return false;
+            }
+
+            $loader.removeClass('hidden');
+
+            const pageType = $pageSelect.val();
+            let url;
+            if (pageType === '3') {  // Assignment
+                url = "{% url 'submission_assignment' %}";
+            } else if (pageType === '2') {  // Lab report
+                url = "{% url 'submission_labreport' %}";
+            } else {
+                alert("Invalid page type selected!");
+                return false;
+            }
+
+            // Create a new form element to submit via POST
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = url;
+            form.style.display = 'none';
+            
+            // Add all form data to the new form
+            $(this).find('input, select, textarea').each(function() {
+                if (this.name) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = this.name;
+                    input.value = $(this).val();
+                    form.appendChild(input);
                 }
             });
-
-            $('.custom-button').on('click', function (e) {
-                e.preventDefault(); // Prevent immediate navigation
-                const url = $(this).attr('href'); // Get the target URL
-                $loader.removeClass('hidden'); // Show the loader
-                setTimeout(() => {
-                    window.location.href = url; // Navigate to the target page
-                }, 1000); 
+            
+            // Add CSRF token
+            const csrf = document.createElement('input');
+            csrf.type = 'hidden';
+            csrf.name = 'csrfmiddlewaretoken';
+            csrf.value = '{{ csrf_token }}';
+            form.appendChild(csrf);
+            
+            document.body.appendChild(form);
+            form.submit();
         });
-    </script>
+    });
+</script>
+{% endblock %}
 
-</body>
 
-</html>

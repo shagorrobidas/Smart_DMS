@@ -5,12 +5,12 @@ class University(models.Model):
     name = models.CharField(
         max_length=255
     )
-    logo_path = models.ImageField(
+    logo = models.ImageField(
         upload_to='university_logos/',
         blank=True,
         null=True
     )
-    university_code = models.CharField(
+    code = models.CharField(
         max_length=10,
         unique=True)
     location = models.CharField(
@@ -25,7 +25,10 @@ class University(models.Model):
 
 class Program(models.Model):
     program_name = models.CharField(
-        max_length=100
+        max_length=100,
+        unique=True,
+        blank=True,
+        null=True
     )
     program_code = models.CharField(
         max_length=10,
@@ -44,16 +47,18 @@ class Program(models.Model):
 
 class Department(models.Model):
     name = models.CharField(
-        max_length=100
+        max_length=100,
+
     )
     department_code = models.CharField(
         max_length=10,
         blank=True,
         null=True
     )
-    programs = models.ManyToManyField(
-        Program,
-        blank=True
+    short_name = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True
     )
 
     def __str__(self):
@@ -144,13 +149,13 @@ class Course(models.Model):
 
 
 class Template(models.Model):
-    type = models.CharField(
+    title = models.CharField(
         max_length=100
     )
-    temp_id = models.IntegerField()
+    code = models.IntegerField()
 
     def __str__(self):
-        return self.type
+        return self.title
 
 
 class Experiment(models.Model):

@@ -1,6 +1,12 @@
 from .depatment_serializers import DepartmentSerializer
+from .template import TemplateSerializer
+from .position import PositionSerializer
+from .university import UniversitySerializer
 
 
 __all__ = [
-    DepartmentSerializer
+    DepartmentSerializer,
+    TemplateSerializer,
+    PositionSerializer,
+    UniversitySerializer,
 ]

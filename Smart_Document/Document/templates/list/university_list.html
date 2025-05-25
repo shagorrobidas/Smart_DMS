@@ -1,0 +1,42 @@
+{% extends 'list/list_base.html' %}
+{% load static %}
+{% block title %}University List{% endblock %}
+
+{% block page_title %}University List{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4">University List</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Short Name</th>
+                        <th>Logo</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for university in universities %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ university.name }}</td>
+                        <td>{{ university.short_name }}</td>
+                        <td>
+                            {% if university.logo %}
+                            <img src="{{ university.logo.url }}" alt="{{ university.name }} Logo" style="width: 50px; height: auto;">
+                            {% else %}
+                            No Logo
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

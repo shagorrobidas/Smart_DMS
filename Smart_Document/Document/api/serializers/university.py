@@ -9,15 +9,15 @@ class UniversitySerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'name',
-            'logo_path',
+            'logo',
             'university_code',
             'location',
         )
 
         def create(self, validated_data):
-            logo = validated_data.pop('logo_path', None)
+            logo = validated_data.pop('logo', None)
             instance = University.objects.create(**validated_data)
             if logo:
-                instance.logo_path = logo
+                instance.logo = logo
                 instance.save()
             return instance

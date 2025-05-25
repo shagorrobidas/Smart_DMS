@@ -301,9 +301,9 @@
                         <div class="col-sm-9 mb-3">
                             {{ university_form.location }}
                         </div>
-                        <label for="{{ university_form.logo_path.id_for_label }}" name="logo" class="col-sm-3 col-form-label">Logo</label>
+                        <label for="{{ university_form.logo.id_for_label }}" name="logo" class="col-sm-3 col-form-label">Logo</label>
                         <div class="col-sm-9 mb-3">
-                            {{ university_form.logo_path }}
+                            {{ university_form.logo }}
                             <img id="logoPreview" src="#" alt="Logo Preview" class="img-fluid mt-2" style="display: none; max-height: 100px;" />
                         </div>
                     </div>
@@ -322,8 +322,8 @@
 {% block extra_js %}
 
 <script>
-
 $(document).ready(function() {
+    // Initialize select2 with "Add New" button
     $('#university-select').select2({
         language: {
             noResults: function() {
@@ -344,11 +344,11 @@ $(document).ready(function() {
     $(document).on('click', '#addUniversityBtn', function() {
         $('#addUniversityModal').modal('show');
     });
-    
+
+    // Submit university form via AJAX
     $('#universityForm').submit(function(e) {
         e.preventDefault();
-        var formData = new FormData(this);
-        console.log(formData);
+        const formData = new FormData(this);
 
         $.ajax({
             url: "{% url 'university_api' %}",
@@ -362,16 +362,9 @@ $(document).ready(function() {
             success: function(response) {
                 console.log('University created successfully!');
                 
-                // Add new option to select2
-                var newOption = new Option(
-                    response.name, 
-                    response.id, 
-                    false, 
-                    true
-                );
+                const newOption = new Option(response.name, response.id, false, true);
                 $('#university-select').append(newOption).trigger('change');
 
-                // Reset form and hide modal
                 $('#universityForm')[0].reset();
                 $('#logoPreview').hide();
                 $('#addUniversityModal').modal('hide');
@@ -381,21 +374,19 @@ $(document).ready(function() {
             }
         });
     });
-});
-document.addEventListener('DOMContentLoaded', function () {
-    const input = document.getElementById('{{ university_form.logo_path.id_for_label }}');
+
+    // Logo preview
+    const input = document.querySelector('[name="logo"]');
     const preview = document.getElementById('logoPreview');
 
     input.addEventListener('change', function () {
         const file = this.files[0];
         if (file) {
             const reader = new FileReader();
-
             reader.onload = function (e) {
                 preview.src = e.target.result;
                 preview.style.display = 'block';
             };
-
             reader.readAsDataURL(file);
         } else {
             preview.style.display = 'none';

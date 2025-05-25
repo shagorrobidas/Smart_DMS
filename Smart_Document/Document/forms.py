@@ -23,7 +23,7 @@ class UniversityForm(forms.ModelForm):
         model = University
         fields = [
             'name',
-            'logo_path',
+            'logo',
             'university_code',
             'location',
         ]
@@ -32,7 +32,7 @@ class UniversityForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Enter university name'
             }),
-            'logo_path': forms.ClearableFileInput(attrs={
+            'logo': forms.ClearableFileInput(attrs={
                 'class': 'form-control-file'
             }),
             'university_code': forms.TextInput(attrs={
@@ -45,8 +45,8 @@ class UniversityForm(forms.ModelForm):
             }),
         }
 
-        def clean_logo_path(self):
-            logo = self.cleaned_data.get('logo_path', False)
+        def clean_logo(self):
+            logo = self.cleaned_data.get('logo', False)
             if logo:
                 if logo.size > 2*1024*1024:  # 2MB limit
                     raise forms.ValidationError("Image file too large ( > 2MB )")

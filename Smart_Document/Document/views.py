@@ -97,3 +97,11 @@ class CoverPageFormView(TemplateView):
         context['university_form'] = UniversityForm()
         return context
 
+
+class UniversityTemplateView(TemplateView):
+    template_name = "list/university_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['universities'] = University.objects.all()
+        return context

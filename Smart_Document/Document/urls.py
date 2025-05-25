@@ -4,6 +4,7 @@ from .views import (
     AssignmentCoverPageView,
     LabCoverPageView,
     CoverPageFormView,
+    UniversityTemplateView
 )
 
 urlpatterns = [
@@ -23,9 +24,15 @@ urlpatterns = [
         name='submission_labreport'
     ),
     path(
-        'submission/create/',
+        'submission/',
         CoverPageFormView.as_view(),
         name='coverpage_create'
     ),
+    path(
+        'university-list/',
+        UniversityTemplateView.as_view(),
+        name='university_List'
+    ),
+
 
 ]

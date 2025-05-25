@@ -10,7 +10,7 @@ class University(models.Model):
         blank=True,
         null=True
     )
-    university_code = models.CharField(
+    code = models.CharField(
         max_length=10,
         unique=True)
     location = models.CharField(

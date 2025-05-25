@@ -10,7 +10,7 @@ class UniversitySerializer(serializers.ModelSerializer):
             'id',
             'name',
             'logo',
-            'university_code',
+            'code',
             'location',
         )
 

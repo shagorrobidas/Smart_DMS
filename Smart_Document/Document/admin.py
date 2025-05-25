@@ -14,9 +14,9 @@ from .models import (
 
 
 class UniversityAdmin(admin.ModelAdmin):
-    list_display = ('name', 'university_code', 'location', )
-    list_filter = ('name', 'university_code', 'location', )
-    search_fields = ('name', 'university_code', 'location')
+    list_display = ('name', 'code', 'location', )
+    list_filter = ('name', 'code', 'location', )
+    search_fields = ('name', 'code', 'location')
     ordering = ('name',)
 
 

@@ -24,7 +24,7 @@ class UniversityForm(forms.ModelForm):
         fields = [
             'name',
             'logo',
-            'university_code',
+            'code',
             'location',
         ]
         widgets = {
@@ -35,7 +35,7 @@ class UniversityForm(forms.ModelForm):
             'logo': forms.ClearableFileInput(attrs={
                 'class': 'form-control-file'
             }),
-            'university_code': forms.TextInput(attrs={
+            'code': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter unique code (e.g., U123)'
             }),

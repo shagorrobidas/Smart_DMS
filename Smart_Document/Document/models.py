@@ -5,7 +5,7 @@ class University(models.Model):
     name = models.CharField(
         max_length=255
     )
-    logo = models.FileField(
+    logo = models.ImageField(
         upload_to='university_logos/',
         blank=True,
         null=True

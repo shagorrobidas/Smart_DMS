@@ -192,7 +192,7 @@
         <div class="section-title">University Information</div>
         <div class="form-group">
             <i class="fas fa-university"></i>
-            <select name="university" class="form-control select2" required>
+            <select name="university" class="form-control" id="university-select" required>
                 <option value="">Select University</option>
                 {% for university in universities %}
                     <option value="{{university.id}}">{{university.name}}</option>
@@ -273,18 +273,138 @@
         <p>Loading...</p>
     </div>
 </div>
+
+<!-- Modal  -->
+
+<div class="modal fade" id="addUniversityModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="addUniversityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addUniversityModalLabel">Create University</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="universityForm" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        <label for="{{ university_form.name.id_for_label }}" name="university_name" class="col-sm-3 col-form-label">University Name</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ university_form.name }}
+                        </div>
+                        <label for="{{ university_form.university_code.id_for_label }}" name="code" class="col-sm-3 col-form-label">Code</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ university_form.university_code }}
+                        </div>
+                        <label for="{{ university_form.location.id_for_label }}" name="code" class="col-sm-3 col-form-label">Location</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ university_form.location }}
+                        </div>
+                        <label for="{{ university_form.logo_path.id_for_label }}" name="logo" class="col-sm-3 col-form-label">Logo</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ university_form.logo_path }}
+                            <img id="logoPreview" src="#" alt="Logo Preview" class="img-fluid mt-2" style="display: none; max-height: 100px;" />
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
 
 <script>
-    $(document).ready(function () {
-        $('.select2').select2({
-            placeholder: '-----Select-----',
-            allowClear: true
+
+$(document).ready(function() {
+    $('#university-select').select2({
+        language: {
+            noResults: function() {
+                return `
+                    <div>
+                        <span>No results found</span><br>
+                        <button class="btn btn-link p-0 mt-1" id="addUniversityBtn">Add New University</button>
+                    </div>
+                `;
+            }
+        },
+        escapeMarkup: function (markup) {
+            return markup;
+        }
+    });
+
+    // Show modal on "Add New University" click
+    $(document).on('click', '#addUniversityBtn', function() {
+        $('#addUniversityModal').modal('show');
+    });
+    
+    $('#universityForm').submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        console.log(formData);
+
+        $.ajax({
+            url: "{% url 'university_api' %}",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                console.log('University created successfully!');
+                
+                // Add new option to select2
+                var newOption = new Option(
+                    response.name, 
+                    response.id, 
+                    false, 
+                    true
+                );
+                $('#university-select').append(newOption).trigger('change');
+
+                // Reset form and hide modal
+                $('#universityForm')[0].reset();
+                $('#logoPreview').hide();
+                $('#addUniversityModal').modal('hide');
+            },
+            error: function(xhr) {
+                console.error(xhr.responseText);
+            }
         });
     });
+});
+document.addEventListener('DOMContentLoaded', function () {
+    const input = document.getElementById('{{ university_form.logo_path.id_for_label }}');
+    const preview = document.getElementById('logoPreview');
+
+    input.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+            preview.src = '#';
+        }
+    });
+});
 </script>
+
 <script>
     $(document).ready(function () {
         const $pageSelect = $('#page-select');

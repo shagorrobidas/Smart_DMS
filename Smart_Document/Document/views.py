@@ -6,6 +6,7 @@ from django.views.generic import CreateView, TemplateView
 from .models import Submission
 from .forms import SubmissionForm
 from .models import University, Department, Position, Template
+from .forms import UniversityForm
 
 logger = logging.getLogger(__name__)
 
@@ -93,4 +94,6 @@ class CoverPageFormView(TemplateView):
         context['departments'] = Department.objects.all()
         context['positions'] = Position.objects.all()
         context['templates'] = Template.objects.all()
+        context['university_form'] = UniversityForm()
         return context
+

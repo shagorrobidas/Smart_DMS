@@ -1,6 +1,6 @@
 # forms.py
 from django import forms
-from .models import Submission, University
+from .models import Submission, University, Department
 
 
 class SubmissionForm(forms.ModelForm):
@@ -54,3 +54,26 @@ class UniversityForm(forms.ModelForm):
                     raise forms.ValidationError("File is not an image")
             return logo
         
+
+
+# class DepatmentForm(forms.ModelForm):
+#     class Meta:
+#         model = Department
+#         fields = [
+#             'name',
+#             'code',
+            
+#         ]
+#         widgets = {
+#             'name': forms.TextInput(attrs={
+#                 'class': 'form-control',
+#                 'placeholder': 'Enter department name'
+#             }),
+#             'code': forms.TextInput(attrs={
+#                 'class': 'form-control',
+#                 'placeholder': 'Enter unique code (e.g., CS101)'
+#             }),
+#             'university': forms.Select(attrs={
+#                 'class': 'form-control'
+#             }),
+#         }

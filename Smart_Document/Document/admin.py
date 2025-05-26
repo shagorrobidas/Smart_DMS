@@ -34,10 +34,10 @@ admin.site.register(Program, ProgramAdmin)
 
 
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'department_code', 'short_name')
-    list_filter = ('name', 'department_code', 'short_name')
+    list_display = ('name', 'code', 'short_name')
+    list_filter = ('name', 'code', 'short_name')
     ordering = ('name',)
-    list_editable = ('department_code', 'short_name')
+    list_editable = ('code', 'short_name')
     list_per_page = 10
     search_fields = ('name',)
 

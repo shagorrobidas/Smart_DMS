@@ -14,7 +14,8 @@ from .models import (
     Department,
     Position,
     Template,
-    Submission
+    Submission,
+    Program
 )
 
 
@@ -53,6 +54,9 @@ class AssignmentCoverPageView(TemplateView):
             'student_name': request.POST.get('student_name', ''),
             'student_id': request.POST.get('student_id', ''),
             'intake': request.POST.get('intake', ''),
+            'program': Program.objects.filter(
+                id=request.POST.get('student_program')
+            ).first(),
             'section': request.POST.get('section', ''),
             'student_department': Department.objects.filter(
                 id=request.POST.get('student_department')
@@ -86,6 +90,10 @@ class LabCoverPageView(TemplateView):
             'student_name': request.POST.get('student_name', ''),
             'student_id': request.POST.get('student_id', ''),
             'intake': request.POST.get('intake', ''),
+            'program': Program.objects.filter(
+                id=request.POST.get('student_program')
+            ).first(),
+            
             'section': request.POST.get('section', ''),
             'student_department': Department.objects.filter(
                 id=request.POST.get('student_department')
@@ -104,6 +112,7 @@ class CoverPageFormView(TemplateView):
         context['departments'] = Department.objects.all()
         context['positions'] = Position.objects.all()
         context['templates'] = Template.objects.all()
+        context['programs'] = Program.objects.all()
         context['university_form'] = UniversityForm()
         context['department_form'] = DepatmentForm()
         return context

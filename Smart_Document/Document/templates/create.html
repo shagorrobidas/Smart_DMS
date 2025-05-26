@@ -206,7 +206,7 @@
                 {% endfor %}
             </select>
             <a href="{% url 'university_List' %}">
-                <i class="fas fa-info-circle tool text-danger" data-toggle="tooltip" data-placement="right" title="Select your university from the list."></i>
+                <i class="fas fa-info-circle tool text-danger" data-toggle="tooltip" data-placement="right" title="See all university list."></i>
             </a>
         </div>
 
@@ -225,18 +225,21 @@
                 {% endfor %}
             </select>
             <a href="{% url 'university_List' %}">
-                <i class="fas fa-info-circle tool text-danger" data-toggle="tooltip" data-placement="right" title="Select your university from the list."></i>
+                <i class="fas fa-info-circle tool text-danger" data-toggle="tooltip" data-placement="right" title="See all Depatment list"></i>
             </a>
         </div>
 
         <div class="form-group">
             <i class="fas fa-clipboard"></i>
-            <select name="faculty_position" class="form-control select2" required>
+            <select name="faculty_position" class="form-control"  id="position-select" required>
                 <option value="">Select Position</option>
                 {% for position in positions %}
                     <option value="{{position.id}}">{{position.title}}</option>
                 {% endfor %}
             </select>
+            <a href="{% url 'university_List' %}">
+                <i class="fas fa-info-circle tool text-danger" data-toggle="tooltip" data-placement="right" title="See all Teacher position list"></i>
+            </a>
         </div>
     
         <div class="section-title">Student Information</div>
@@ -258,6 +261,16 @@
         <div class="form-group">
             <i class="fas fa-layer-group"></i>
             <input type="text" name="section" placeholder="Section" required>
+        </div>
+
+        <div class="form-group">
+            <i class="fa-solid fa-user-tie"></i>
+                <select id="student-program" name="student_program" class="form-control" required>
+                    <option value="">Select Program</option>
+                        {% for program in programs %}
+                            <option value="{{program.id}}">{{program.program_name}}</option>
+                        {% endfor %}
+                </select>
         </div>
 
         <div class="form-group">
@@ -369,12 +382,57 @@
     </div>
 </div>
 
+<!-- =======================Teacher Position Modal======================= -->
+
+<div class="modal fade" id="addPositionModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="addPositionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPositionModalLabel">Create Depatment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="positionForm" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        <label for="{{ department_form.name.id_for_label }}" name="name" class="col-sm-3 col-form-label">Depatment Name</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ department_form.name }}
+                        </div>
+                        <label for="{{ department_form.code.id_for_label }}" name="code" class="col-sm-3 col-form-label">Code</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ department_form.code }}
+                        </div>
+                        <label for="{{ department_form.location.id_for_label }}" name="sort_name" class="col-sm-3 col-form-label">Short name</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ department_form.short_name }}
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}
 
 {% block extra_js %}
 
 <script>
 $(document).ready(function() {
+    $('.select2').select2({
+        
+        placeholder: 'Select an option',
+        allowClear: true
+    });
     // Initialize select2 with "Add New" button
     $('#university-select').select2({
         language: {
@@ -391,6 +449,20 @@ $(document).ready(function() {
             return markup;
         }
     });
+    $('#university-select').select2({
+        language: {
+            noResults: function() {
+                return `
+                    <div>
+                        <button class="btn btn-link p-0 mt-1" id="addUniversityBtn">Create University</button>
+                    </div>
+                `;
+            }
+        },
+        escapeMarkup: function (markup) {
+            return markup;
+        }
+    });
 
     $('#department-select').select2({
         language: {
@@ -398,7 +470,23 @@ $(document).ready(function() {
                 return `
                     <div>
                         <span>No results found</span><br>
-                        <button class="btn btn-link p-0 mt-1" id="addDepatmentBtn">Add New Depatment</button>
+                        <button class="btn btn-link p-0 mt-1" id="addDepatmentBtn">Create Depatment</button>
+                    </div>
+                `;
+            }
+        },
+        escapeMarkup: function (markup) {
+            return markup;
+        }
+    });
+
+    $('#position-select').select2({
+        language: {
+            noResults: function() {
+                return `
+                    <div>
+                        <span>No results found</span><br>
+                        <button class="btn btn-link p-0 mt-1" id="addPositionModal">Create position </button>
                     </div>
                 `;
             }
@@ -415,6 +503,9 @@ $(document).ready(function() {
     // Show modal on "Add New Depatment" click
     $(document).on('click', '#addDepatmentBtn', function() {
         $('#addDepatmentModal').modal('show');
+    });
+    $(document).on('click', '#addPositionModal', function() {
+        $('#addPositionModal').modal('show');
     });
 
     // Submit university form via AJAX
@@ -443,6 +534,35 @@ $(document).ready(function() {
             },
             error: function(xhr) {
                 console.error(xhr.responseText);
+            }
+        });
+    });
+
+    $('#depatmentForm').on('submit', function (e) {
+        e.preventDefault();
+
+        let formData = new FormData(this);
+
+        $.ajax({
+            url: "{% url 'depatment_api' %}",
+            type: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            data: formData,
+            processData: false, // Important!
+            contentType: false, // Important!
+            success: function (response) {
+                console.log('Department created:', response);
+                const newOption = new Option(response.name, response.id, false, true);
+                $('#department-select').append(newOption).trigger('change');
+                $('#addDepatmentModal').modal('hide');
+                $('#depatmentForm')[0].reset();
+                // Optionally refresh department list or show success
+            },
+            error: function (xhr) {
+                console.error('Error:', xhr.responseJSON);
+                // Optionally show validation errors
             }
         });
     });

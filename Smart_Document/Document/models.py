@@ -50,7 +50,7 @@ class Department(models.Model):
         max_length=100,
 
     )
-    department_code = models.CharField(
+    code = models.CharField(
         max_length=10,
         blank=True,
         null=True

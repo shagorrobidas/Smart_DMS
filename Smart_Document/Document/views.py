@@ -3,10 +3,20 @@ import logging
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.views.generic import CreateView, TemplateView
-from .models import Submission
-from .forms import SubmissionForm
-from .models import University, Department, Position, Template
-from .forms import UniversityForm
+
+from .forms import (
+    SubmissionForm,
+    UniversityForm,
+    DepatmentForm
+)
+from .models import (
+    University,
+    Department,
+    Position,
+    Template,
+    Submission
+)
+
 
 logger = logging.getLogger(__name__)
 
@@ -95,6 +105,7 @@ class CoverPageFormView(TemplateView):
         context['positions'] = Position.objects.all()
         context['templates'] = Template.objects.all()
         context['university_form'] = UniversityForm()
+        context['department_form'] = DepatmentForm()
         return context
 
 

@@ -12,30 +12,33 @@
         </div>
         <div class="assignment-title">ASSIGNMENT</div>
         <table class="info-table">
+            
             <tr>
-                <td>Course Code   : <span>{{ course_code }}</span></td>
+                <td>Course Code     : <span>{{ course_code }}</span></td>
             </tr>
             <tr>
-                <td>Course Title  : <span>{{ course_title }}</span></td>
+                <td>Course Title    : <span>{{ course_title }}</span></td>
             </tr>
             <tr>
-                <td>Assignment No : <span>{{ assignment_no }}</span></td>
+                <td>Assignment No   : <span>{{ assignment_no }}</span></td>
             </tr>
         </table>
         <div class="submission-section">
             <div class="box">
+                <h3>Submitted From </h3>
                 <p>Name     : {{ student_name }}</p>
                 <p>ID No    : {{ student_id }}</p>
                 <p>Intake   : {{ intake }}</p>
                 <p>Section  : {{ section }}</p>
-                <p>Program :{{program.program_name}} in {{ student_department.short_name }}</p>
+                <p>Program  :{{program.program_name}} in {{ student_department.short_name }}</p>
             </div>
             <div class="box">
                 <h3>Submitted To </h3>
                 <p>Name : {{ teacher_name }}</p>
                 <p>({{ faculty_position.title }})</p>
                 <p>Dept : {{ faculty_department.short_name }}</p>
-                <p>{{ university.name }}</p>
+                <p></p>
+                <p style="text-align: center;">{{ university.name }}</p>
             </div>
         </div>
         <div class="date-section">

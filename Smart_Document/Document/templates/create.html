@@ -68,10 +68,29 @@
             background-color: #e0e0e0;
             margin: 0 10px;
         }
-        .custom-button {
+        .custom-button-preview {
             width: 100%;
-            
             display: inline-block;
+            margin-left: 30px;
+            margin-right: 30px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #4CAF50; /* Main color */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .custom-button-download {
+            width: 100%;
+            display: inline-block;
+            margin-left: 30px;
+            margin-right: 30px;
             padding: 12px 24px;
             font-size: 16px;
             font-weight: bold;
@@ -86,13 +105,13 @@
             transition: all 0.3s ease;
         }
 
-        .custom-button:hover {
+        .custom-button-prevew:hover, .custom-button-download:hover {
             background-color: #45a049; /* Darker shade on hover */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
             transform: translateY(-2px);
         }
 
-        .custom-button:active {
+        .custom-button-prevew:active, .custom-button-download:active {
             background-color: #3e8e41;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
             transform: translateY(0);
@@ -289,8 +308,13 @@
         </div>
     
         <div class="form-group">
-            <button type="submit" name="action" value="assignment" id="assignment-btn" class="custom-button hidden">Generate Assignment</button>
-            <button type="submit" name="action" value="labreport" id="labreport-btn" class="custom-button hidden">Generate Lab Report</button>
+            <!-- Assignment Buttons -->
+            <button type="submit" name="action" value="preview_assignment" id="assignment-preview-btn" class="custom-button-preview hidden">Preview Assignment</button>
+            <button type="submit" name="action" value="download_assignment" id="assignment-download-btn" class="custom-button-download hidden">Download Assignment</button>
+
+            <!-- Lab Report Buttons -->
+            <button type="submit" name="action" value="preview_labreport" id="labreport-preview-btn" class="custom-button-preview hidden">Preview Lab Report</button>
+            <button type="submit" name="action" value="download_labreport" id="labreport-download-btn" class="custom-button-download hidden">Download Lab Report</button>
         </div>
     </form>
 
@@ -594,81 +618,85 @@ $(document).ready(function() {
         const $assignment = $('#assignment');
         const $labreport = $('#labreport');
         const $labreportExperiment = $('#labreport-experiment');
-        const $assignmentBtn = $('#assignment-btn');
-        const $labreportBtn = $('#labreport-btn');
+        const $assignmentPreviewBtn = $('#assignment-preview-btn');
+        const $assignmentDownloadBtn = $('#assignment-download-btn');
+        const $labreportPreviewBtn = $('#labreport-preview-btn');
+        const $labreportDownloadBtn = $('#labreport-download-btn');
         const $loader = $('#loader');
         const $form = $('#coverpage-form');
 
-        // Initialize with loader hidden
-        $loader.addClass('hidden');
+        // Initialize loader visibility
+        $loader.toggleClass('hidden', $pageSelect.val() !== "");
 
-        // Show loader if no template is selected on page load
-        if ($pageSelect.val() === "") {
-            $loader.removeClass('hidden');
-        }
-
-        // Dropdown change event
+        // Page type change logic
         $pageSelect.on('change', function () {
             const selectedValue = $(this).val();
+            $loader.toggleClass('hidden', selectedValue !== "");
 
-            // Hide loader when a template is selected
-            if (selectedValue !== "") {
-                $loader.addClass('hidden');
-            } else {
-                $loader.removeClass('hidden');
-            }
-
-            if (selectedValue === '3') {  // Assuming 3 is assignment
+            if (selectedValue === '3') { // Assignment
                 $assignment.removeClass('hidden');
                 $labreport.addClass('hidden');
                 $labreportExperiment.addClass('hidden');
-                $assignmentBtn.removeClass('hidden');
-                $labreportBtn.addClass('hidden');
-            } else if (selectedValue === '2') {  // Assuming 2 is labreport
+
+                $assignmentPreviewBtn.removeClass('hidden');
+                $assignmentDownloadBtn.removeClass('hidden');
+                $labreportPreviewBtn.addClass('hidden');
+                $labreportDownloadBtn.addClass('hidden');
+            } else if (selectedValue === '2') { // Lab Report
                 $labreport.removeClass('hidden');
                 $labreportExperiment.removeClass('hidden');
                 $assignment.addClass('hidden');
-                $labreportBtn.removeClass('hidden');
-                $assignmentBtn.addClass('hidden');
+
+                $labreportPreviewBtn.removeClass('hidden');
+                $labreportDownloadBtn.removeClass('hidden');
+                $assignmentPreviewBtn.addClass('hidden');
+                $assignmentDownloadBtn.addClass('hidden');
             } else {
+                // Hide all conditional fields and buttons
                 $assignment.addClass('hidden');
                 $labreport.addClass('hidden');
                 $labreportExperiment.addClass('hidden');
-                $assignmentBtn.addClass('hidden');
-                $labreportBtn.addClass('hidden');
+                $assignmentPreviewBtn.addClass('hidden');
+                $assignmentDownloadBtn.addClass('hidden');
+                $labreportPreviewBtn.addClass('hidden');
+                $labreportDownloadBtn.addClass('hidden');
             }
         });
 
-        // Form submission handler
+        // Form submission logic
         $form.on('submit', function (e) {
             e.preventDefault();
-            
+
             if ($pageSelect.val() === "") {
                 alert("Please select a page type first!");
                 return false;
             }
 
-            $loader.removeClass('hidden');
-
-            const pageType = $pageSelect.val();
+            const $submitBtn = $(document.activeElement);
+            const actionValue = $submitBtn.val();
             let url;
-            if (pageType === '3') {  // Assignment
+
+            if (actionValue === 'preview_assignment') {
                 url = "{% url 'submission_assignment' %}";
-            } else if (pageType === '2') {  // Lab report
+            } else if (actionValue === 'download_assignment') {
+                url = "{% url 'submission_assignment' %}";
+            } else if (actionValue === 'preview_labreport') {
+                url = "{% url 'submission_labreport' %}";
+            } else if (actionValue === 'download_labreport') {
                 url = "{% url 'submission_labreport' %}";
             } else {
-                alert("Invalid page type selected!");
+                alert("Unknown action!");
                 return false;
             }
 
-            // Create a new form element to submit via POST
+            // Build a new form to submit
             const form = document.createElement('form');
             form.method = 'POST';
             form.action = url;
             form.style.display = 'none';
-            
-            // Add all form data to the new form
-            $(this).find('input, select, textarea').each(function() {
+
+            // Append form data
+            $(this).find('input, select, textarea').each(function () {
                 if (this.name) {
                     const input = document.createElement('input');
                     input.type = 'hidden';
@@ -677,14 +705,14 @@ $(document).ready(function() {
                     form.appendChild(input);
                 }
             });
-            
-            // Add CSRF token
+
+            // Append CSRF token
             const csrf = document.createElement('input');
             csrf.type = 'hidden';
             csrf.name = 'csrfmiddlewaretoken';
             csrf.value = '{{ csrf_token }}';
             form.appendChild(csrf);
-            
+
             document.body.appendChild(form);
             form.submit();
         });

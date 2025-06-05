@@ -11,34 +11,36 @@
         </div>
         <div class="assignment-title">Lab Report</div>
         <table class="info-table">
+            
             <tr>
-                <td>Course Code : <span>{{ course_code }}</span></td>
+                <td>Course Code     : <span>{{ course_code }}</span></td>
             </tr>
             <tr>
-                <td>Course Title : <span>{{ course_title }}</span></td>
+                <td>Course Title    : <span>{{ course_title }}</span></td>
             </tr>
             <tr>
                 <td>Experiment Name : <span>{{ labreport_name }}</span></td>
             </tr>
             <tr>
-                <td>Experiment No : <span>{{ labreport_experiment }}</span></td>
+                <td>Experiment No   : <span>{{ labreport_experiment }}</span></td>
             </tr>
         </table>
         <div class="submission-section">
             <div class="box">
                 <h3>Submitted By :</h3>
-                <p>Name : {{ student_name }}</p>
-                <p>ID No : {{ student_id }}</p>
-                <p>Intake : {{ intake }}</p>
-                <p>Section : {{ section }}</p>
-                <p>Program : {{ student_department.short_name }}</p>
+                <p>Name     : {{ student_name }}</p>
+                <p>ID No    : {{ student_id }}</p>
+                <p>Intake   : {{ intake }}</p>
+                <p>Section  : {{ section }}</p>
+                <p>Program  :{{program.program_name}} in {{ student_department.short_name }}</p>
             </div>
             <div class="box">
                 <h3>Submitted To : </h3>
-                <p>Name : {{ teacher_name }}</p>
-                <p>({{ faculty_position.title }})</p>
+                <p>Name : {{ teacher_name }} ({{ faculty_position.title }})</p>
+                <p></p>
                 <p>Dept: {{ faculty_department.short_name }}</p>
-                <p>{{ university.name }}</p>
+                <p></p>
+                <p style="text-align: center;">{{ university.name }}</p>
             </div>
         </div>
         <div class="date-section">

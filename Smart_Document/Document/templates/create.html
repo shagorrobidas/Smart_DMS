@@ -68,10 +68,29 @@
             background-color: #e0e0e0;
             margin: 0 10px;
         }
-        .custom-button {
+        .custom-button-preview {
             width: 100%;
-            
             display: inline-block;
+            margin-left: 30px;
+            margin-right: 30px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #4CAF50; /* Main color */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .custom-button-download {
+            width: 100%;
+            display: inline-block;
+            margin-left: 30px;
+            margin-right: 30px;
             padding: 12px 24px;
             font-size: 16px;
             font-weight: bold;
@@ -86,13 +105,13 @@
             transition: all 0.3s ease;
         }
 
-        .custom-button:hover {
+        .custom-button-prevew:hover, .custom-button-download:hover {
             background-color: #45a049; /* Darker shade on hover */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
             transform: translateY(-2px);
         }
 
-        .custom-button:active {
+        .custom-button-prevew:active, .custom-button-download:active {
             background-color: #3e8e41;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
             transform: translateY(0);
@@ -144,6 +163,10 @@
             color: #333;
             margin-bottom: 20px;
         }
+        .tool{
+            padding: 0px;
+            margin-left: 14px;
+        }
     </style>
 {% endblock %}
 
@@ -189,7 +212,10 @@
             <input type="number" name="labreport_experiment" placeholder="Number of Experiment">
         </div>
 
-        <div class="section-title">University Information</div>
+        <div class="section-title">
+            University Information
+            
+        </div>
         <div class="form-group">
             <i class="fas fa-university"></i>
             <select name="university" class="form-control" id="university-select" required>
@@ -198,6 +224,9 @@
                     <option value="{{university.id}}">{{university.name}}</option>
                 {% endfor %}
             </select>
+            <a href="{% url 'university_List' %}">
+                <i class="fas fa-info-circle tool text-danger" data-toggle="tooltip" data-placement="right" title="See all university list."></i>
+            </a>
         </div>
 
         <div class="section-title">Faculty Information</div>
@@ -208,22 +237,28 @@
 
         <div class="form-group">
             <i class="fas fa-graduation-cap"></i>
-            <select name="faculty_department" class="form-control select2" required>
+            <select name="faculty_department" class="form-control" id="department-select" required>
                 <option value="">Select Department</option>
                 {% for department in departments %}
                     <option value="{{department.id}}">{{department.name}}</option>
                 {% endfor %}
             </select>
+            <a href="{% url 'university_List' %}">
+                <i class="fas fa-info-circle tool text-danger" data-toggle="tooltip" data-placement="right" title="See all Depatment list"></i>
+            </a>
         </div>
 
         <div class="form-group">
             <i class="fas fa-clipboard"></i>
-            <select name="faculty_position" class="form-control select2" required>
+            <select name="faculty_position" class="form-control"  id="position-select" required>
                 <option value="">Select Position</option>
                 {% for position in positions %}
                     <option value="{{position.id}}">{{position.title}}</option>
                 {% endfor %}
             </select>
+            <a href="{% url 'university_List' %}">
+                <i class="fas fa-info-circle tool text-danger" data-toggle="tooltip" data-placement="right" title="See all Teacher position list"></i>
+            </a>
         </div>
     
         <div class="section-title">Student Information</div>
@@ -248,12 +283,22 @@
         </div>
 
         <div class="form-group">
+            <i class="fa-solid fa-user-tie"></i>
+                <select id="student-program" name="student_program" class="form-control" required>
+                    <option value="">Select Program</option>
+                        {% for program in programs %}
+                            <option value="{{program.id}}">{{program.program_name}}</option>
+                        {% endfor %}
+                </select>
+        </div>
+
+        <div class="form-group">
             <i class="fas fa-graduation-cap"></i>
                 <select id="student-department" name="student_department" class="form-control select2" required>
                     <option value="">Select Department</option>
-                    {% for department in departments %}
-                        <option value="{{department.id}}">{{department.name}}</option>
-                    {% endfor %}
+                        {% for department in departments %}
+                            <option value="{{department.id}}">{{department.name}}</option>
+                        {% endfor %}
                 </select>
         </div>
         
@@ -263,18 +308,24 @@
         </div>
     
         <div class="form-group">
-            <button type="submit" name="action" value="assignment" id="assignment-btn" class="custom-button hidden">Generate Assignment</button>
-            <button type="submit" name="action" value="labreport" id="labreport-btn" class="custom-button hidden">Generate Lab Report</button>
+            <!-- Assignment Buttons -->
+            <button type="submit" name="action" value="preview_assignment" id="assignment-preview-btn" class="custom-button-preview hidden">Preview Assignment</button>
+            <button type="submit" name="action" value="download_assignment" id="assignment-download-btn" class="custom-button-download hidden">Download Assignment</button>
+
+            <!-- Lab Report Buttons -->
+            <button type="submit" name="action" value="preview_labreport" id="labreport-preview-btn" class="custom-button-preview hidden">Preview Lab Report</button>
+            <button type="submit" name="action" value="download_labreport" id="labreport-download-btn" class="custom-button-download hidden">Download Lab Report</button>
         </div>
     </form>
 
     <div id="loader" class="hidden">
         <div class="spinner"></div>
         <p>Loading...</p>
+        <p class="text-danger kalpurush">Please select a template first.</p>
     </div>
 </div>
 
-<!-- Modal  -->
+<!--  =======================University Modal=============================== -->
 
 <div class="modal fade" id="addUniversityModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="addUniversityModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -317,12 +368,95 @@
         </div>
     </div>
 </div>
+<!--  =======================Department Modal=============================== -->
+<div class="modal fade" id="addDepatmentModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="addDepatmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addDepatmentModalLabel">Create Depatment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="depatmentForm" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        <label for="{{ department_form.name.id_for_label }}" name="name" class="col-sm-3 col-form-label">Depatment Name</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ department_form.name }}
+                        </div>
+                        <label for="{{ department_form.code.id_for_label }}" name="code" class="col-sm-3 col-form-label">Code</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ department_form.code }}
+                        </div>
+                        <label for="{{ department_form.location.id_for_label }}" name="sort_name" class="col-sm-3 col-form-label">Short name</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ department_form.short_name }}
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- =======================Teacher Position Modal======================= -->
+
+<div class="modal fade" id="addPositionModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="addPositionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPositionModalLabel">Create Depatment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="positionForm" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        <label for="{{ department_form.name.id_for_label }}" name="name" class="col-sm-3 col-form-label">Depatment Name</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ department_form.name }}
+                        </div>
+                        <label for="{{ department_form.code.id_for_label }}" name="code" class="col-sm-3 col-form-label">Code</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ department_form.code }}
+                        </div>
+                        <label for="{{ department_form.location.id_for_label }}" name="sort_name" class="col-sm-3 col-form-label">Short name</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ department_form.short_name }}
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}
 
 {% block extra_js %}
 
 <script>
 $(document).ready(function() {
+    $('.select2').select2({
+        
+        placeholder: 'Select an option',
+        allowClear: true
+    });
     // Initialize select2 with "Add New" button
     $('#university-select').select2({
         language: {
@@ -339,10 +473,63 @@ $(document).ready(function() {
             return markup;
         }
     });
+    $('#university-select').select2({
+        language: {
+            noResults: function() {
+                return `
+                    <div>
+                        <button class="btn btn-link p-0 mt-1" id="addUniversityBtn">Create University</button>
+                    </div>
+                `;
+            }
+        },
+        escapeMarkup: function (markup) {
+            return markup;
+        }
+    });
+
+    $('#department-select').select2({
+        language: {
+            noResults: function() {
+                return `
+                    <div>
+                        <span>No results found</span><br>
+                        <button class="btn btn-link p-0 mt-1" id="addDepatmentBtn">Create Depatment</button>
+                    </div>
+                `;
+            }
+        },
+        escapeMarkup: function (markup) {
+            return markup;
+        }
+    });
+
+    $('#position-select').select2({
+        language: {
+            noResults: function() {
+                return `
+                    <div>
+                        <span>No results found</span><br>
+                        <button class="btn btn-link p-0 mt-1" id="addPositionModal">Create position </button>
+                    </div>
+                `;
+            }
+        },
+        escapeMarkup: function (markup) {
+            return markup;
+        }
+    });
 
     // Show modal on "Add New University" click
     $(document).on('click', '#addUniversityBtn', function() {
         $('#addUniversityModal').modal('show');
+    });
+    // Show modal on "Add New Depatment" click
+    $(document).on('click', '#addDepatmentBtn', function() {
+        $('#addDepatmentModal').modal('show');
+    });
+    $(document).on('click', '#addPositionModal', function() {
+        $('#addPositionModal').modal('show');
     });
 
     // Submit university form via AJAX
@@ -375,6 +562,35 @@ $(document).ready(function() {
         });
     });
 
+    $('#depatmentForm').on('submit', function (e) {
+        e.preventDefault();
+
+        let formData = new FormData(this);
+
+        $.ajax({
+            url: "{% url 'depatment_api' %}",
+            type: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            data: formData,
+            processData: false, // Important!
+            contentType: false, // Important!
+            success: function (response) {
+                console.log('Department created:', response);
+                const newOption = new Option(response.name, response.id, false, true);
+                $('#department-select').append(newOption).trigger('change');
+                $('#addDepatmentModal').modal('hide');
+                $('#depatmentForm')[0].reset();
+                // Optionally refresh department list or show success
+            },
+            error: function (xhr) {
+                console.error('Error:', xhr.responseJSON);
+                // Optionally show validation errors
+            }
+        });
+    });
+
     // Logo preview
     const input = document.querySelector('[name="logo"]');
     const preview = document.getElementById('logoPreview');
@@ -402,81 +618,85 @@ $(document).ready(function() {
         const $assignment = $('#assignment');
         const $labreport = $('#labreport');
         const $labreportExperiment = $('#labreport-experiment');
-        const $assignmentBtn = $('#assignment-btn');
-        const $labreportBtn = $('#labreport-btn');
+        const $assignmentPreviewBtn = $('#assignment-preview-btn');
+        const $assignmentDownloadBtn = $('#assignment-download-btn');
+        const $labreportPreviewBtn = $('#labreport-preview-btn');
+        const $labreportDownloadBtn = $('#labreport-download-btn');
         const $loader = $('#loader');
         const $form = $('#coverpage-form');
 
-        // Initialize with loader hidden
-        $loader.addClass('hidden');
+        // Initialize loader visibility
+        $loader.toggleClass('hidden', $pageSelect.val() !== "");
 
-        // Show loader if no template is selected on page load
-        if ($pageSelect.val() === "") {
-            $loader.removeClass('hidden');
-        }
-
-        // Dropdown change event
+        // Page type change logic
         $pageSelect.on('change', function () {
             const selectedValue = $(this).val();
+            $loader.toggleClass('hidden', selectedValue !== "");
 
-            // Hide loader when a template is selected
-            if (selectedValue !== "") {
-                $loader.addClass('hidden');
-            } else {
-                $loader.removeClass('hidden');
-            }
-
-            if (selectedValue === '3') {  // Assuming 3 is assignment
+            if (selectedValue === '3') { // Assignment
                 $assignment.removeClass('hidden');
                 $labreport.addClass('hidden');
                 $labreportExperiment.addClass('hidden');
-                $assignmentBtn.removeClass('hidden');
-                $labreportBtn.addClass('hidden');
-            } else if (selectedValue === '2') {  // Assuming 2 is labreport
+
+                $assignmentPreviewBtn.removeClass('hidden');
+                $assignmentDownloadBtn.removeClass('hidden');
+                $labreportPreviewBtn.addClass('hidden');
+                $labreportDownloadBtn.addClass('hidden');
+            } else if (selectedValue === '2') { // Lab Report
                 $labreport.removeClass('hidden');
                 $labreportExperiment.removeClass('hidden');
                 $assignment.addClass('hidden');
-                $labreportBtn.removeClass('hidden');
-                $assignmentBtn.addClass('hidden');
+
+                $labreportPreviewBtn.removeClass('hidden');
+                $labreportDownloadBtn.removeClass('hidden');
+                $assignmentPreviewBtn.addClass('hidden');
+                $assignmentDownloadBtn.addClass('hidden');
             } else {
+                // Hide all conditional fields and buttons
                 $assignment.addClass('hidden');
                 $labreport.addClass('hidden');
                 $labreportExperiment.addClass('hidden');
-                $assignmentBtn.addClass('hidden');
-                $labreportBtn.addClass('hidden');
+                $assignmentPreviewBtn.addClass('hidden');
+                $assignmentDownloadBtn.addClass('hidden');
+                $labreportPreviewBtn.addClass('hidden');
+                $labreportDownloadBtn.addClass('hidden');
             }
         });
 
-        // Form submission handler
+        // Form submission logic
         $form.on('submit', function (e) {
             e.preventDefault();
-            
+
             if ($pageSelect.val() === "") {
                 alert("Please select a page type first!");
                 return false;
             }
 
-            $loader.removeClass('hidden');
-
-            const pageType = $pageSelect.val();
+            const $submitBtn = $(document.activeElement);
+            const actionValue = $submitBtn.val();
             let url;
-            if (pageType === '3') {  // Assignment
+
+            if (actionValue === 'preview_assignment') {
                 url = "{% url 'submission_assignment' %}";
-            } else if (pageType === '2') {  // Lab report
+            } else if (actionValue === 'download_assignment') {
+                url = "{% url 'submission_assignment' %}";
+            } else if (actionValue === 'preview_labreport') {
+                url = "{% url 'submission_labreport' %}";
+            } else if (actionValue === 'download_labreport') {
                 url = "{% url 'submission_labreport' %}";
             } else {
-                alert("Invalid page type selected!");
+                alert("Unknown action!");
                 return false;
             }
 
-            // Create a new form element to submit via POST
+            // Build a new form to submit
             const form = document.createElement('form');
             form.method = 'POST';
             form.action = url;
             form.style.display = 'none';
-            
-            // Add all form data to the new form
-            $(this).find('input, select, textarea').each(function() {
+
+            // Append form data
+            $(this).find('input, select, textarea').each(function () {
                 if (this.name) {
                     const input = document.createElement('input');
                     input.type = 'hidden';
@@ -485,14 +705,14 @@ $(document).ready(function() {
                     form.appendChild(input);
                 }
             });
-            
-            // Add CSRF token
+
+            // Append CSRF token
             const csrf = document.createElement('input');
             csrf.type = 'hidden';
             csrf.name = 'csrfmiddlewaretoken';
             csrf.value = '{{ csrf_token }}';
             form.appendChild(csrf);
-            
+
             document.body.appendChild(form);
             form.submit();
         });

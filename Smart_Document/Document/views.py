@@ -3,10 +3,21 @@ import logging
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.views.generic import CreateView, TemplateView
-from .models import Submission
-from .forms import SubmissionForm
-from .models import University, Department, Position, Template
-from .forms import UniversityForm
+
+from .forms import (
+    SubmissionForm,
+    UniversityForm,
+    DepatmentForm
+)
+from .models import (
+    University,
+    Department,
+    Position,
+    Template,
+    Submission,
+    Program
+)
+
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +54,9 @@ class AssignmentCoverPageView(TemplateView):
             'student_name': request.POST.get('student_name', ''),
             'student_id': request.POST.get('student_id', ''),
             'intake': request.POST.get('intake', ''),
+            'program': Program.objects.filter(
+                id=request.POST.get('student_program')
+            ).first(),
             'section': request.POST.get('section', ''),
             'student_department': Department.objects.filter(
                 id=request.POST.get('student_department')
@@ -76,6 +90,10 @@ class LabCoverPageView(TemplateView):
             'student_name': request.POST.get('student_name', ''),
             'student_id': request.POST.get('student_id', ''),
             'intake': request.POST.get('intake', ''),
+            'program': Program.objects.filter(
+                id=request.POST.get('student_program')
+            ).first(),
+            
             'section': request.POST.get('section', ''),
             'student_department': Department.objects.filter(
                 id=request.POST.get('student_department')
@@ -94,7 +112,9 @@ class CoverPageFormView(TemplateView):
         context['departments'] = Department.objects.all()
         context['positions'] = Position.objects.all()
         context['templates'] = Template.objects.all()
+        context['programs'] = Program.objects.all()
         context['university_form'] = UniversityForm()
+        context['department_form'] = DepatmentForm()
         return context
 
 

@@ -1,6 +1,6 @@
 # forms.py
 from django import forms
-from .models import Submission, University, Department
+from .models import Submission, University, Department, Position
 
 
 class SubmissionForm(forms.ModelForm):
@@ -76,6 +76,28 @@ class DepatmentForm(forms.ModelForm):
             'short_name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter short name (e.g., CS)'
+            }),
+        }
+
+class PositionForm(forms.ModelForm):
+    class Meta:
+        model = Position
+        fields = [
+            'title',
+            'position_code',
+        ]
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter position name'
+            }),
+            'code': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter unique code (e.g., P001)'
+            }),
+            'short_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter short name (e.g., Prof.)'
             }),
         }
 

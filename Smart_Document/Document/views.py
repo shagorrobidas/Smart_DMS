@@ -7,7 +7,8 @@ from django.views.generic import CreateView, TemplateView
 from .forms import (
     SubmissionForm,
     UniversityForm,
-    DepatmentForm
+    DepatmentForm,
+    PositionForm
 )
 from .models import (
     University,
@@ -115,6 +116,7 @@ class CoverPageFormView(TemplateView):
         context['programs'] = Program.objects.all()
         context['university_form'] = UniversityForm()
         context['department_form'] = DepatmentForm()
+        context['position_form'] = PositionForm()
         return context
 
 

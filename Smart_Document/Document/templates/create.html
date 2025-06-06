@@ -421,20 +421,16 @@
                 {% csrf_token %}
                 <div class="modal-body">
                     <div class="row">
-                        <label for="{{ department_form.name.id_for_label }}" name="name" class="col-sm-3 col-form-label">Depatment Name</label>
+                        <label for="{{ position_form.title.id_for_label }}" name="name" class="col-sm-3 col-form-label">Position Title</label>
                         <div class="col-sm-9 mb-3">
-                            {{ department_form.name }}
+                            {{ position_form.title }}
                         </div>
                         <label for="{{ department_form.code.id_for_label }}" name="code" class="col-sm-3 col-form-label">Code</label>
                         <div class="col-sm-9 mb-3">
-                            {{ department_form.code }}
+                            {{ position_form.position_code }}
                         </div>
-                        <label for="{{ department_form.location.id_for_label }}" name="sort_name" class="col-sm-3 col-form-label">Short name</label>
-                        <div class="col-sm-9 mb-3">
-                            {{ department_form.short_name }}
-                        </div>
+                        
                     </div>
-    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
+    <title>Assignment Cover Page</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -29,46 +29,39 @@
             box-sizing: border-box;
             margin-top: 20px;
         }
+
         .container {
-            /*width: 230mm;  A4 width minus margins */
-            height: 257mm; /*  A4 height minus margins */
-            border: 3px outset black;
-            /* padding: 20px; */
-            
-            /* margin-top: 30px;
-            margin-bottom: 30px; */
+            width: 180mm; /* A4 width minus margins */
+            height: 257mm; /* A4 height minus margins */
+            border: 1px solid black;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            box-sizing: border-box;
+            margin-top: 30px;
+            margin-bottom: 30px;
         }
 
-        .header h2{
-            margin-top: 50px;
-            font-size: 22px;
+        .header h3{
+            margin: 57px 0px 0px 0px;
+            font-size: 17px;
             text-transform: uppercase;
             font-weight: 900;
-            text-align: center;
         }
 
         .logo {
             margin-top: 10px;
             width: 80px;
             height: auto;
-            display: block; /* Makes the image a block element */
-            margin-left: auto; /* Centers horizontally */
-            margin-right: auto;
         }
 
         .assignment-title {
-            padding: 10px 15px;
+            border: 1px solid black;
+            display: inline-block;
+            padding: 5px 15px;
             font-weight: bold;
             font-size: 18px;
-            font-weight: 800;
             margin: 20px 0;
-            color: indigo;
-            border: 2px ridge rgb(69, 48, 187);
-            text-align: center;
-            width: 30%; /* Span full page width */
-            box-sizing: border-box; /* Include padding and border in width */
-            margin-left: auto; /* Center horizontally */
-            margin-right: auto; /* Center horizontally */
         }
 
         .info-table {
@@ -116,11 +109,57 @@
         }
     </style>
 
-    {% block extra_css %}{% endblock %}
 </head>
 <body>
-    {% block content %}
-    {% endblock %}
+    
+    <div class="container">
+        <div class="header">
+            <h3>{{ university.name }}</h3>
+            {% if university.logo %}
+                <img src="{{ university.logo.url }}" alt="University Logo" class="logo">
+            {% endif %}
+        </div>
+        <div class="assignment-title">ASSIGNMENT</div>
+        <table class="info-table">
+            
+            <tr>
+                <td>Course Code     : <span>{{ course_code }}</span></td>
+            </tr>
+            <tr>
+                <td>Course Title    : <span>{{ course_title }}</span></td>
+            </tr>
+            <tr>
+                <td>Assignment No   : <span>{{ assignment_no }}</span></td>
+            </tr>
+        </table>
+        <div class="submission-section">
+            <div class="box">
+                <h3>Submitted From </h3>
+                <p>Name     : {{ student_name }}</p>
+                <p>ID No    : {{ student_id }}</p>
+                <p>Intake   : {{ intake }}</p>
+                <p>Section  : {{ section }}</p>
+                <p>Program  :{{program.program_name}} in {{ student_department.short_name }}</p>
+            </div>
+            <div class="box">
+                <h3>Submitted To </h3>
+                <p>Name : {{ teacher_name }}</p>
+                <p>({{ faculty_position.title }})</p>
+                <p>Dept : {{ faculty_department.short_name }}</p>
+                <p></p>
+                <p style="text-align: center;">{{ university.name }}</p>
+            </div>
+        </div>
+        <div class="date-section">
+            <div class="date">
+                <p>Date of Submission : {{ date }}</p>
+            </div>
+            <div class="signature">
+                <p>Signature of Teacher </p>
+            </div>
+            
+        </div>
+    </div>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -128,6 +167,6 @@
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    {% block extra_js %}{% endblock %}
+
 </body>
 </html>

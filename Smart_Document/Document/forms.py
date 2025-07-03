@@ -79,6 +79,7 @@ class DepatmentForm(forms.ModelForm):
             }),
         }
 
+
 class PositionForm(forms.ModelForm):
     class Meta:
         model = Position
@@ -87,17 +88,13 @@ class PositionForm(forms.ModelForm):
             'position_code',
         ]
         widgets = {
-            'name': forms.TextInput(attrs={
+            'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter position name'
             }),
-            'code': forms.TextInput(attrs={
+            'position_code': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter unique code (e.g., P001)'
-            }),
-            'short_name': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter short name (e.g., Prof.)'
             }),
         }
 

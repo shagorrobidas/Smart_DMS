@@ -5,9 +5,14 @@
 {% block content %}
     <div class="container">
         <div class="header">
-            <h3>{{ university.name }}</h3>
-            {% if university.logo %}
+            <h2>{{ university.name }}</h2>
+            <!-- {% if university.logo %}
                 <img src="{{ university.logo.url }}" alt="University Logo" class="logo">
+            {% endif %} -->
+            {% if university.logo %}
+                <img src="{{ university.logo.url }}" alt="University Logo" class="logo" />
+            {% else %}
+                <img src="{% static 'university_logos/logo.png' %}" alt="University Logo" class="logo" />
             {% endif %}
         </div>
         <div class="assignment-title">ASSIGNMENT</div>

@@ -29,39 +29,55 @@
             box-sizing: border-box;
             margin-top: 20px;
         }
-
         .container {
-            width: 180mm; /* A4 width minus margins */
-            height: 257mm; /* A4 height minus margins */
-            border: 1px solid black;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-            box-sizing: border-box;
-            margin-top: 30px;
-            margin-bottom: 30px;
+            /*width: 230mm;  A4 width minus margins */
+            height: 257mm; /*  A4 height minus margins */
+            border: 3px outset black;
+            /* padding: 20px; */
+            
+            /* margin-top: 30px;
+            margin-bottom: 30px; */
         }
 
-        .header h3{
-            margin: 57px 0px 0px 0px;
-            font-size: 17px;
+        .header h2{
+            margin-top: 50px;
+            font-size: 22px;
             text-transform: uppercase;
             font-weight: 900;
+            text-align: center;
         }
 
         .logo {
             margin-top: 10px;
             width: 80px;
             height: auto;
+            display: block; /* Makes the image a block element */
+            margin-left: auto; /* Centers horizontally */
+            margin-right: auto;
         }
 
-        .assignment-title {
-            border: 1px solid black;
-            display: inline-block;
-            padding: 5px 15px;
+        /*.assignment-title {
+            
+            padding: 10px 15px;
             font-weight: bold;
             font-size: 18px;
             margin: 20px 0;
+            color: indigo;
+            border: 1px solid black;
+        }*/
+        .assignment-title {
+            padding: 10px 15px;
+            font-weight: bold;
+            font-size: 18px;
+            font-weight: 800;
+            margin: 20px 0;
+            color: indigo;
+            border: 2px ridge rgb(69, 48, 187);
+            text-align: center;
+            width: 30%; /* Span full page width */
+            box-sizing: border-box; /* Include padding and border in width */
+            margin-left: auto; /* Center horizontally */
+            margin-right: auto; /* Center horizontally */
         }
 
         .info-table {

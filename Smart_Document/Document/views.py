@@ -38,10 +38,9 @@ class ListDocumentView(TemplateView):
 
 
 class AssignmentCoverPageView(TemplateView):
-    # template_name = "assignment_report.html"
-    template_name = "assignment.html"
+    template_name = "assignment_report.html"
+    # template_name = "assignment.html"
     
-
     def post(self, request, *args, **kwargs):
         context = {
             'course_code': request.POST.get('course_code', ''),

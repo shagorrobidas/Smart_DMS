@@ -2,6 +2,9 @@
 import logging
 from django.urls import reverse_lazy
 from django.shortcuts import render
+from Smart_Document.utils import render_to_pdf
+
+from django.http import HttpResponse
 from django.views.generic import CreateView, TemplateView
 
 from .forms import (
@@ -35,7 +38,9 @@ class ListDocumentView(TemplateView):
 
 
 class AssignmentCoverPageView(TemplateView):
-    template_name = "assignment_report.html"
+    # template_name = "assignment_report.html"
+    template_name = "assignment.html"
+    
 
     def post(self, request, *args, **kwargs):
         context = {
@@ -64,7 +69,15 @@ class AssignmentCoverPageView(TemplateView):
             ).first(),
             'date': request.POST.get('date', ''),
         }
-        return render(request, self.template_name, context)
+
+        action = request.POST.get('action')
+        print(f"Received action: {action}")
+        if action == 'preview_assignment':
+            return render_to_pdf(self.template_name, context, download=False)
+        elif action == 'download_assignment':
+            return render_to_pdf(self.template_name, context, download=True)
+        else:
+            return HttpResponse("Invalid action", status=400)
 
 
 class LabCoverPageView(TemplateView):
@@ -101,7 +114,14 @@ class LabCoverPageView(TemplateView):
             ).first(),
             'date': request.POST.get('date', ''),
         }
-        return render(request, self.template_name, context)
+        action = request.POST.get('action')
+        print(f"Received action: {action}")
+        if action == 'preview_labreport':
+            return render_to_pdf(self.template_name, context, download=False)
+        elif action == 'download_labreport':
+            return render_to_pdf(self.template_name, context, download=True)
+        else:
+            return HttpResponse("Invalid action", status=400)
 
 
 class CoverPageFormView(TemplateView):

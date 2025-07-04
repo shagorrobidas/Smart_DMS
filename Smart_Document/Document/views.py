@@ -46,6 +46,13 @@ class AssignmentCoverPageView(TemplateView):
             id=request.POST.get('university')
         ).first()
 
+        page_type = request.POST.get('page_type')
+        print(f"Page type: {page_type}=========================================")
+        template_type = Template.objects.filter(
+            id=page_type
+        ).first()
+        print(f"Template type: {template_type}{"="*10}")
+
         context = {
             'course_code': request.POST.get('course_code', ''),
             'course_title': request.POST.get('course_title', ''),
@@ -101,6 +108,7 @@ class LabCoverPageView(TemplateView):
             'labreport_experiment': request.POST.get(
                 'labreport_experiment', ''
             ),
+            # 'page_type': request.POST.get('page_type', ''),
             'university': University.objects.filter(
                 id=request.POST.get('university')
             ).first(),

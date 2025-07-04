@@ -12,35 +12,75 @@
         </div>
         <div class="assignment-title">ASSIGNMENT</div>
         <table class="info-table">
-            
             <tr>
-                <td>Course Code     : <span>{{ course_code }}</span></td>
+                <td class="label">Course Code</td>
+                <td class="colon">:</td>
+                <td class="value">{{ course_code }}</td>
             </tr>
             <tr>
-                <td>Course Title    : <span>{{ course_title }}</span></td>
+                <td class="label">Course Title</td>
+                <td class="colon">:</td>
+                <td class="value">{{ course_title }}</td>
             </tr>
             <tr>
-                <td>Assignment No   : <span>{{ assignment_no }}</span></td>
+                <td class="label">Assignment No</td>
+                <td class="colon">:</td>
+                <td class="value">{{ assignment_no }}</td>
             </tr>
         </table>
+
         <div class="submission-section">
             <div class="box">
-                <h3>Submitted From </h3>
-                <p>Name     : {{ student_name }}</p>
-                <p>ID No    : {{ student_id }}</p>
-                <p>Intake   : {{ intake }}</p>
-                <p>Section  : {{ section }}</p>
-                <p>Program  :{{program.program_name}} in {{ student_department.short_name }}</p>
+                <h3 class="underline-heading">Submitted From</h3>
+                <div class="info-row">
+                    <span class="labe">Name</span>
+                    <span class="colo">:</span>
+                    <span class="valu">{{ student_name }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="labe">ID No</span>
+                    <span class="colo">:</span>
+                    <span class="valu">{{ student_id }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="labe">Intake</span>
+                    <span class="colo">:</span>
+                    <span class="valu">{{ intake }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="labe">Section</span>
+                    <span class="colo">:</span>
+                    <span class="valu">{{ section }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="labe">Program</span>
+                    <span class="colo">:</span>
+                    <span class="valu">{{ program.program_name }} in {{ student_department.short_name }}</span>
+                </div>
+                
             </div>
+
             <div class="box">
-                <h3>Submitted To </h3>
-                <p>Name : {{ teacher_name }}</p>
-                <p>({{ faculty_position.title }})</p>
-                <p>Dept : {{ faculty_department.short_name }}</p>
-                <p></p>
+                <h3 class="underline-heading">Submitted To</h3>
+                <div class="info-row">
+                    <span class="labe">Name</span>
+                    <span class="colo">:</span>
+                    <span class="valu">{{ teacher_name }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="labe">Position</span>
+                    <span class="colo">:</span>
+                    <span class="valu">{{ faculty_position.title }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="labe">Dept</span>
+                    <span class="colo">:</span>
+                    <span class="valu">{{ faculty_department.short_name }}</span>
+                </div>
                 <p style="text-align: center;">{{ university.name }}</p>
             </div>
         </div>
+
         <div class="date-section">
             <div class="date">
                 <p>Date of Submission : {{ date }}</p>

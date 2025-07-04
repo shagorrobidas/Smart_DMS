@@ -51,8 +51,11 @@ class PositionAdmin(admin.ModelAdmin):
 
 
 class TemplateAdmin(admin.ModelAdmin):
-    list_display = ('title', 'code')
+    list_display = ('id', 'title', 'code')
     search_fields = ('title',)
+    list_filter = ('title', 'code')
+    ordering = ('id',)
+    list_editable = ('code',)
 
 
 # Register your models

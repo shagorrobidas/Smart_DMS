@@ -42,6 +42,10 @@ class AssignmentCoverPageView(TemplateView):
     # template_name = "assignment.html"
     
     def post(self, request, *args, **kwargs):
+        university = University.objects.filter(
+            id=request.POST.get('university')
+        ).first()
+
         context = {
             'course_code': request.POST.get('course_code', ''),
             'course_title': request.POST.get('course_title', ''),
@@ -68,7 +72,11 @@ class AssignmentCoverPageView(TemplateView):
             ).first(),
             'date': request.POST.get('date', ''),
         }
-
+        if university and university.logo:
+            context['university_logo_path'] = university.logo.path
+        else:
+            context['university_logo_path'] = None
+        
         action = request.POST.get('action')
         print(f"Received action: {action}")
         if action == 'preview_assignment':
@@ -83,6 +91,9 @@ class LabCoverPageView(TemplateView):
     template_name = "labreport_cover.html"
 
     def post(self, request, *args, **kwargs):
+        university = University.objects.filter(
+            id=request.POST.get('university')
+        ).first()
         context = {
             'course_code': request.POST.get('course_code', ''),
             'course_title': request.POST.get('course_title', ''),
@@ -113,6 +124,11 @@ class LabCoverPageView(TemplateView):
             ).first(),
             'date': request.POST.get('date', ''),
         }
+        if university and university.logo:
+            context['university_logo_path'] = university.logo.path
+        else:
+            context['university_logo_path'] = None
+    
         action = request.POST.get('action')
         print(f"Received action: {action}")
         if action == 'preview_labreport':

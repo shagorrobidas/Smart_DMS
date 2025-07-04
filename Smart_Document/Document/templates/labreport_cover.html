@@ -5,8 +5,8 @@
     <div class="container">
         <div class="header">
             <h2>{{ university.name }}</h2>
-            {% if university.logo %}
-                <img src="{{ university.logo.url }}" alt="University Logo" class="logo">
+            {% if university_logo_path %}
+                <img src="{{ university_logo_path }}" alt="University Logo" class="logo" />
             {% endif %}
         </div>
         <div class="assignment-title">Lab Report</div>

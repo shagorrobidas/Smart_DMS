@@ -414,6 +414,21 @@ $(document).ready(function() {
         }
     });
 
+    $('#student-program').select2({
+        language: {
+            noResults: function() {
+                return `
+                    <div>
+                        <button class="btn btn-link p-0 mt-1" id="addProgramModal">Create Program </button>
+                    </div>
+                `;
+            }
+        },
+        escapeMarkup: function (markup) {
+            return markup;
+        }
+    });
+
     // Show modal on "Add New University" click
     $(document).on('click', '#addUniversityBtn', function() {
         $('#addUniversityModal').modal('show');
@@ -424,6 +439,10 @@ $(document).ready(function() {
     });
     $(document).on('click', '#addPositionModal', function() {
         $('#addPositionModal').modal('show');
+    });
+   
+    $(document).on('click', '#addProgramModal', function() {
+        $('#addProgramModal').modal('show');
     });
 
     // Submit university form via AJAX

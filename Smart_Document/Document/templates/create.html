@@ -167,6 +167,11 @@
             padding: 0px;
             margin-left: 14px;
         }
+        .custom-icon{
+            margin-right: 10px;
+            color: #fff;
+            padding-left: 0px;
+        }
     </style>
 {% endblock %}
 
@@ -225,7 +230,7 @@
                     <option value="{{university.id}}">{{university.name}}</option>
                 {% endfor %}
             </select>
-            <a href="{% url 'university_List' %}">
+            <a href="#" data-toggle="modal" data-target="#listUniversityModal">
                 <i class="fas fa-info-circle tool text-danger" data-toggle="tooltip" data-placement="right" title="See all university list."></i>
             </a>
         </div>
@@ -244,8 +249,8 @@
                     <option value="{{department.id}}">{{department.name}}</option>
                 {% endfor %}
             </select>
-            <a href="{% url 'university_List' %}">
-                <i class="fas fa-info-circle tool text-danger" data-toggle="tooltip" data-placement="right" title="See all Depatment list"></i>
+            <a href="#" data-toggle="modal" data-target="#listDepartmentModal">
+                <i class="fas fa-info-circle tool text-danger" data-toggle="tooltip" data-placement="right" title="See all Department list"></i>
             </a>
         </div>
 
@@ -257,7 +262,7 @@
                     <option value="{{position.id}}">{{position.title}}</option>
                 {% endfor %}
             </select>
-            <a href="{% url 'university_List' %}">
+            <a href="#" data-toggle="modal" data-target="#listPositionModal">
                 <i class="fas fa-info-circle tool text-danger" data-toggle="tooltip" data-placement="right" title="See all Teacher position list"></i>
             </a>
         </div>
@@ -310,139 +315,32 @@
     
         <div class="form-group">
             <!-- Assignment Buttons -->
-            <button type="submit" name="preview_assignment" value="preview_assignment" id="assignment-preview-btn" class="custom-button-preview hidden">Preview Assignment</button>
+            <button type="submit" name="preview_assignment" value="preview_assignment" id="assignment-preview-btn" class="custom-button-preview hidden">
+                <i class="fa-solid fa-magnifying-glass" style="color: #fff;"></i> Preview Assignment</button>
             <button type="submit" name="download_assignment" value="download_assignment" id="assignment-download-btn" class="custom-button-download hidden" formaction="{% url 'submission_assignment' %}"
-        formtarget="_blank">Download Assignment</button>
+        formtarget="_blank"><i class="fa-solid fa-download" style="color: #fff;"></i>Download Assignment</button>
 
             <!-- Lab Report Buttons -->
-            <button type="submit" name="preview_labreport" value="preview_labreport" id="labreport-preview-btn" class="custom-button-preview hidden">Preview Lab Report</button>
+            <button type="submit" name="preview_labreport" value="preview_labreport" id="labreport-preview-btn" class="custom-button-preview hidden">
+                <i class="fa-solid fa-magnifying-glass" style="color: #fff;"></i> Preview Lab Report</button>
             <button type="submit" name="download_labreport" value="download_labreport" id="labreport-download-btn" class="custom-button-download hidden" formaction="{% url 'submission_assignment' %}"
-        formtarget="_blank">Download Lab Report</button>
+        formtarget="_blank"><i class="fa-solid fa-download" style="color: #fff;"></i>Download Lab Report</button>
         </div>
     </form>
 
     <div id="loader" class="hidden">
         <div class="spinner"></div>
         <p>Loading...</p>
-        <p class="text-danger kalpurush">Please select a template first.</p>
+        <p class="text-danger kalpurush" style="font-size: 18px;"> <i class="fa-solid fa-triangle-exclamation"></i>  Please select a template first.</p>
     </div>
 </div>
+{% include 'create_modal.html' %}
+{% include 'list_modal.html' %}
 
-<!--  =======================University Modal=============================== -->
 
-<div class="modal fade" id="addUniversityModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="addUniversityModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addUniversityModalLabel">Create University</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="universityForm" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="modal-body">
-                    <div class="row">
-                        <label for="{{ university_form.name.id_for_label }}" name="university_name" class="col-sm-3 col-form-label">University Name</label>
-                        <div class="col-sm-9 mb-3">
-                            {{ university_form.name }}
-                        </div>
-                        <label for="{{ university_form.code.id_for_label }}" name="code" class="col-sm-3 col-form-label">Code</label>
-                        <div class="col-sm-9 mb-3">
-                            {{ university_form.code }}
-                        </div>
-                        <label for="{{ university_form.location.id_for_label }}" name="code" class="col-sm-3 col-form-label">Location</label>
-                        <div class="col-sm-9 mb-3">
-                            {{ university_form.location }}
-                        </div>
-                        <label for="{{ university_form.logo.id_for_label }}" name="logo" class="col-sm-3 col-form-label">Logo</label>
-                        <div class="col-sm-9 mb-3">
-                            {{ university_form.logo }}
-                            <img id="logoPreview" src="#" alt="Logo Preview" class="img-fluid mt-2" style="display: none; max-height: 100px;" />
-                        </div>
-                    </div>
-    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!--  =======================Department Modal=============================== -->
-<div class="modal fade" id="addDepatmentModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="addDepatmentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addDepatmentModalLabel">Create Depatment</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="depatmentForm" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="modal-body">
-                    <div class="row">
-                        <label for="{{ department_form.name.id_for_label }}" name="name" class="col-sm-3 col-form-label">Depatment Name</label>
-                        <div class="col-sm-9 mb-3">
-                            {{ department_form.name }}
-                        </div>
-                        <label for="{{ department_form.code.id_for_label }}" name="code" class="col-sm-3 col-form-label">Code</label>
-                        <div class="col-sm-9 mb-3">
-                            {{ department_form.code }}
-                        </div>
-                        <label for="{{ department_form.location.id_for_label }}" name="sort_name" class="col-sm-3 col-form-label">Short name</label>
-                        <div class="col-sm-9 mb-3">
-                            {{ department_form.short_name }}
-                        </div>
-                    </div>
-    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
-<!-- =======================Teacher Position Modal======================= -->
 
-<div class="modal fade" id="addPositionModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="addPositionModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addPositionModalLabel">Create Position </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="positionForm" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="modal-body">
-                    <div class="row">
-                        <label for="{{ position_form.title.id_for_label }}" name="name" class="col-sm-3 col-form-label">Position Title</label>
-                        <div class="col-sm-9 mb-3">
-                            {{ position_form.title }}
-                        </div>
-                        <label for="{{ department_form.code.id_for_label }}" name="code" class="col-sm-3 col-form-label">Code</label>
-                        <div class="col-sm-9 mb-3">
-                            {{ position_form.position_code }}
-                        </div>
-                        
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 
 
 {% endblock %}
@@ -462,7 +360,6 @@ $(document).ready(function() {
             noResults: function() {
                 return `
                     <div>
-                        <span>No results found</span><br>
                         <button class="btn btn-link p-0 mt-1" id="addUniversityBtn">Add New University</button>
                     </div>
                 `;
@@ -492,7 +389,6 @@ $(document).ready(function() {
             noResults: function() {
                 return `
                     <div>
-                        <span>No results found</span><br>
                         <button class="btn btn-link p-0 mt-1" id="addDepatmentBtn">Create Depatment</button>
                     </div>
                 `;
@@ -508,7 +404,6 @@ $(document).ready(function() {
             noResults: function() {
                 return `
                     <div>
-                        <span>No results found</span><br>
                         <button class="btn btn-link p-0 mt-1" id="addPositionModal">Create position </button>
                     </div>
                 `;

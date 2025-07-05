@@ -14,7 +14,7 @@ from .models import (
 
 
 class UniversityAdmin(admin.ModelAdmin):
-    list_display = ('name', 'code', 'location', )
+    list_display = ('id', 'name', 'code', 'location', )
     list_filter = ('name', 'code', 'location', )
     search_fields = ('name', 'code', 'location')
     ordering = ('name',)
@@ -24,7 +24,7 @@ admin.site.register(University, UniversityAdmin)
 
 
 class ProgramAdmin(admin.ModelAdmin):
-    list_display = ('program_name', 'program_code')
+    list_display = ('id', 'program_name', 'program_code')
     list_filter = ('program_name', 'program_code')
     ordering = ('program_name',)
     search_fields = ('program_name',)
@@ -34,7 +34,7 @@ admin.site.register(Program, ProgramAdmin)
 
 
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'code', 'short_name')
+    list_display = ('id', 'name', 'code', 'short_name')
     list_filter = ('name', 'code', 'short_name')
     ordering = ('name',)
     list_editable = ('code', 'short_name')
@@ -46,7 +46,7 @@ admin.site.register(Department, DepartmentAdmin)
 
 
 class PositionAdmin(admin.ModelAdmin):
-    list_display = ('title', 'position_code')
+    list_display = ('id', 'title', 'position_code')
     search_fields = ('title',)
 
 

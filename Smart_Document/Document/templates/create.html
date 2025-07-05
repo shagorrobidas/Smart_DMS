@@ -533,6 +533,33 @@ $(document).ready(function() {
         });
     });
 
+    $('#programForm').on('submit', function (e) {
+        e.preventDefault();
+
+        let formData = new FormData(this);
+
+        $.ajax({
+            url: "{% url 'program_api' %}",
+            type: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            data: formData,
+            processData: false, // Important!
+            contentType: false, // Important!
+            success: function (response) {
+                console.log('Program data created:', response);
+                const newOption = new Option(response.program_name, response.id, false, true);
+                $('#student-program').append(newOption).trigger('change');
+                $('#addProgramModal').modal('hide');
+                $('#programForm')[0].reset();
+                
+            },
+            error: function (xhr) {
+                console.error('Error:', xhr.responseJSON);
+            }
+        });
+    });
     // Logo preview
     const input = document.querySelector('[name="logo"]');
     const preview = document.getElementById('logoPreview');

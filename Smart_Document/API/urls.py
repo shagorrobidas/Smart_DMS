@@ -5,6 +5,7 @@ from Document.api.views import (
     TemplateListCreateAPIView,
     PositionListCreateAPIView,
     UniversityListCreateAPIView,
+    ProgramListCreateAPIView,
 )
 
 
@@ -33,6 +34,11 @@ urlpatterns = [
         'v1/university/',
         UniversityListCreateAPIView.as_view(),
         name='university_api'
+    ),
+    path(
+        'v1/program/',
+        ProgramListCreateAPIView.as_view(),
+        name='program_api'
     ),
 
 

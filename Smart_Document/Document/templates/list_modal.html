@@ -1,0 +1,121 @@
+<div class="modal fade" id="listUniversityModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="listUniversityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="listUniversityModalLabel">University List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color: red;">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Short Name</th>
+                        <th>Logo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for university in universities %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ university.name }}</td>
+                        <td>{{ university.short_name }}</td>
+                        <td>
+                            {% if university.logo %}
+                            <img src="{{ university.logo.url }}" alt="{{ university.name }} Logo" style="width: 50px; height: auto;">
+                            {% else %}
+                            No Logo
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <!-- <button type="submit" class="btn btn-success">Save</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="listDepartmentModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="listDepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="listDepatmentModalLabel">Department List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color: red;">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Short Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for department in departments %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ department.name }}</td>
+                            
+                            <td>
+                                {{ department.short_name }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="listPositionModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="listPositionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="listPositionModalLabel">Position List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color: red;">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for position in positions %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ position.title }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

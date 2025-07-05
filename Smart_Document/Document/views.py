@@ -42,6 +42,17 @@ class AssignmentCoverPageView(TemplateView):
     # template_name = "assignment.html"
     
     def post(self, request, *args, **kwargs):
+        university = University.objects.filter(
+            id=request.POST.get('university')
+        ).first()
+
+        page_type = request.POST.get('page_type')
+        print(f"Page type: {page_type}=========================================")
+        template_type = Template.objects.filter(
+            id=page_type
+        ).first()
+        print(f"Template type: {template_type}{"="*10}")
+
         context = {
             'course_code': request.POST.get('course_code', ''),
             'course_title': request.POST.get('course_title', ''),
@@ -68,7 +79,11 @@ class AssignmentCoverPageView(TemplateView):
             ).first(),
             'date': request.POST.get('date', ''),
         }
-
+        if university and university.logo:
+            context['university_logo_path'] = university.logo.path
+        else:
+            context['university_logo_path'] = None
+        
         action = request.POST.get('action')
         print(f"Received action: {action}")
         if action == 'preview_assignment':
@@ -83,6 +98,9 @@ class LabCoverPageView(TemplateView):
     template_name = "labreport_cover.html"
 
     def post(self, request, *args, **kwargs):
+        university = University.objects.filter(
+            id=request.POST.get('university')
+        ).first()
         context = {
             'course_code': request.POST.get('course_code', ''),
             'course_title': request.POST.get('course_title', ''),
@@ -90,6 +108,7 @@ class LabCoverPageView(TemplateView):
             'labreport_experiment': request.POST.get(
                 'labreport_experiment', ''
             ),
+            # 'page_type': request.POST.get('page_type', ''),
             'university': University.objects.filter(
                 id=request.POST.get('university')
             ).first(),
@@ -113,6 +132,11 @@ class LabCoverPageView(TemplateView):
             ).first(),
             'date': request.POST.get('date', ''),
         }
+        if university and university.logo:
+            context['university_logo_path'] = university.logo.path
+        else:
+            context['university_logo_path'] = None
+    
         action = request.POST.get('action')
         print(f"Received action: {action}")
         if action == 'preview_labreport':

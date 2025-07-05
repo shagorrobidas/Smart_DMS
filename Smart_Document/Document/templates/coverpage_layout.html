@@ -15,45 +15,43 @@
     <style>
         @page {
             size: A4;
-            margin: 20mm;
+            margin: 10mm;
         }
         
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Times New Roman", Times, serif;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            /*height: 100vh;*/
+
             box-sizing: border-box;
-            margin-top: 20px;
         }
         .container {
-            /*width: 230mm;  A4 width minus margins */
-            height: 257mm; /*  A4 height minus margins */
+            height: 278mm; 
             border: 3px outset black;
-            /* padding: 20px; */
             
-            /* margin-top: 30px;
-            margin-bottom: 30px; */
         }
 
         .header h2{
             margin-top: 50px;
-            font-size: 22px;
+            font-size: 23px;
             text-transform: uppercase;
             font-weight: 900;
             text-align: center;
+            margin-bottom: 30px;
+            color: rgb(51, 153, 194);
         }
 
         .logo {
-            margin-top: 10px;
-            width: 80px;
+            margin-top: 0px;
+            width: 100px;
             height: auto;
             display: block; /* Makes the image a block element */
             margin-left: auto; /* Centers horizontally */
             margin-right: auto;
+            margin-bottom: 30px; /* Adds space below the image */
         }
 
         .assignment-title {
@@ -61,24 +59,39 @@
             font-weight: bold;
             font-size: 18px;
             font-weight: 800;
-            margin: 20px 0;
-            color: indigo;
-            border: 2px ridge rgb(69, 48, 187);
+            text-transform: uppercase;
+            color: rgb(51, 153, 194);
+            border: 2px ridge rgb(51, 153, 194);
             text-align: center;
-            width: 30%; /* Span full page width */
-            box-sizing: border-box; /* Include padding and border in width */
-            margin-left: auto; /* Center horizontally */
-            margin-right: auto; /* Center horizontally */
+            width: 30%; 
+            box-sizing: border-box; 
+            margin-left: auto;
+            margin-right: auto; 
         }
 
         .info-table {
-            margin-top: 20px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            margin-left: 20%;
             text-align: left;
-            margin-left: 25%;
+            border-collapse: collapse;
+            font-size: 18px;
         }
 
         .info-table td {
-            padding: 5px;
+            padding: 4px 8px;
+            vertical-align: top;
+        }
+
+        .info-table .label {
+            min-width: 120px;
+            font-weight: bold;
+        }
+
+        .info-table .colon {
+            width: 7px;
+            text-align: center;
+            font-weight: bold;
         }
 
         .submission-section {
@@ -95,16 +108,47 @@
             text-align: left;
             box-sizing: border-box;
             border-radius: 15px;
+            overflow-wrap: break-word;    /* Wrap long words */
+            word-wrap: break-word;        /* For older browsers */
+            word-break: break-word;
         }
 
         .box h3 {
-            margin-top: 0;
+            margin-top: 5px;
             font-size: 16px;
             text-align: center;
+            
+        }
+        .underline-heading {
+            margin-top: 5px;
+            font-size: 16px;
+            text-align: center;
+            
+            border-bottom: 1px solid black; /* 1px underline */
+            padding-bottom: 1px;            /* 1–2px spacing below text */
+            width: 90%; /* Adjust width as needed */
+            margin-left: auto; /* Center horizontally */
+            margin-right: auto; /* Center horizontally */
         }
 
-        .box p {
-            margin: 5px 0;
+        .info-row {
+            display: grid;
+            grid-template-columns: 80px 10px auto;
+            padding: 3px 0;
+        }
+
+        .labe {
+            font-weight: bold;
+        }
+
+        .colo {
+            text-align: center;
+            width: 7px;
+            font-weight: bold;
+        }
+
+        .valu {
+            word-break: break-word;
         }
 
         .date-section {

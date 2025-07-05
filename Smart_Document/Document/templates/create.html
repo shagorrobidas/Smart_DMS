@@ -311,11 +311,13 @@
         <div class="form-group">
             <!-- Assignment Buttons -->
             <button type="submit" name="preview_assignment" value="preview_assignment" id="assignment-preview-btn" class="custom-button-preview hidden">Preview Assignment</button>
-            <button type="submit" name="download_assignment" value="download_assignment" id="assignment-download-btn" class="custom-button-download hidden">Download Assignment</button>
+            <button type="submit" name="download_assignment" value="download_assignment" id="assignment-download-btn" class="custom-button-download hidden" formaction="{% url 'submission_assignment' %}"
+        formtarget="_blank">Download Assignment</button>
 
             <!-- Lab Report Buttons -->
             <button type="submit" name="preview_labreport" value="preview_labreport" id="labreport-preview-btn" class="custom-button-preview hidden">Preview Lab Report</button>
-            <button type="submit" name="download_labreport" value="download_labreport" id="labreport-download-btn" class="custom-button-download hidden">Download Lab Report</button>
+            <button type="submit" name="download_labreport" value="download_labreport" id="labreport-download-btn" class="custom-button-download hidden" formaction="{% url 'submission_assignment' %}"
+        formtarget="_blank">Download Lab Report</button>
         </div>
     </form>
 
@@ -635,6 +637,7 @@ $(document).ready(function() {
             preview.src = '#';
         }
     });
+    
 });
 </script>
 
@@ -708,6 +711,24 @@ $(document).ready(function() {
         });
     });
 </script>
+<script>
+    $(document).ready(function () {
+        let redirectAfterDownload = false;
+
+        $('button[name="download_assignment"], button[name="download_labreport"]').on('click', function () {
+            redirectAfterDownload = true;
+        });
+
+        $('#coverpage-form').on('submit', function (e) {
+            if (redirectAfterDownload) {
+                setTimeout(function () {
+                    window.location.href = "{% url 'submission_create' %}";
+                }, 3000); // Adjust time based on download speed
+            }
+        });
+    });
+</script>
+
 {% endblock %}
 
 

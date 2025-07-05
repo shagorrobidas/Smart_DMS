@@ -128,4 +128,3 @@ class ProgramForm(forms.ModelForm):
                 'rows': 3
             }),
         }
-

@@ -1,7 +1,6 @@
 # views.py
 import logging
 from django.urls import reverse_lazy
-from django.shortcuts import render
 from Smart_Document.utils import render_to_pdf
 from django.urls import reverse
 
@@ -42,7 +41,7 @@ class ListDocumentView(TemplateView):
 class AssignmentCoverPageView(TemplateView):
     template_name = "assignment_report.html"
     # template_name = "assignment.html"
-    
+
     def post(self, request, *args, **kwargs):
         university = University.objects.filter(
             id=request.POST.get('university')
@@ -90,15 +89,19 @@ class AssignmentCoverPageView(TemplateView):
 
         if template_type:
             context['template'] = template_type
-        
+
         action = request.POST.get('action')
         print(f"Received action: {action}")
         if action == 'preview_assignment' or action == 'preview_labreport':
             return render_to_pdf(self.template_name, context, download=False)
         elif action == 'download_assignment' or action == 'download_labreport':
             # return render_to_pdf(self.template_name, context, download=True)
-            response = render_to_pdf(self.template_name, context, download=True)
-            response['X-Redirect-After-Download'] = reverse('submission_create')
+            response = render_to_pdf(
+                self.template_name, context, download=True
+            )
+            response['X-Redirect-After-Download'] = reverse(
+                'submission_create'
+            )
             return response
         else:
             return HttpResponse("Invalid action", status=400)

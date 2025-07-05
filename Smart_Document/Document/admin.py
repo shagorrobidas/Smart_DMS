@@ -67,4 +67,3 @@ admin.site.register(Course)
 admin.site.register(Template, TemplateAdmin)
 admin.site.register(Experiment)
 admin.site.register(Submission)
-

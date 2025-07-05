@@ -637,115 +637,6 @@ $(document).ready(function() {
     });
 });
 </script>
-{% comment %}
-
-<script>
-    $(document).ready(function () {
-        const $pageSelect = $('#page-select');
-        const $assignment = $('#assignment');
-        const $labreport = $('#labreport');
-        const $labreportExperiment = $('#labreport-experiment');
-        const $assignmentPreviewBtn = $('#assignment-preview-btn');
-        const $assignmentDownloadBtn = $('#assignment-download-btn');
-        const $labreportPreviewBtn = $('#labreport-preview-btn');
-        const $labreportDownloadBtn = $('#labreport-download-btn');
-        const $loader = $('#loader');
-        const $form = $('#coverpage-form');
-
-        // Initialize loader visibility
-        $loader.toggleClass('hidden', $pageSelect.val() !== "");
-
-        // Page type change logic
-        $pageSelect.on('change', function () {
-            const selectedValue = $(this).val();
-            $loader.toggleClass('hidden', selectedValue !== "");
-
-            if (selectedValue === '3') { // Assignment
-                $assignment.removeClass('hidden');
-                $labreport.addClass('hidden');
-                $labreportExperiment.addClass('hidden');
-
-                $assignmentPreviewBtn.removeClass('hidden');
-                $assignmentDownloadBtn.removeClass('hidden');
-                $labreportPreviewBtn.addClass('hidden');
-                $labreportDownloadBtn.addClass('hidden');
-            } else if (selectedValue === '2') { // Lab Report
-                $labreport.removeClass('hidden');
-                $labreportExperiment.removeClass('hidden');
-                $assignment.addClass('hidden');
-
-                $labreportPreviewBtn.removeClass('hidden');
-                $labreportDownloadBtn.removeClass('hidden');
-                $assignmentPreviewBtn.addClass('hidden');
-                $assignmentDownloadBtn.addClass('hidden');
-            } else {
-                // Hide all conditional fields and buttons
-                $assignment.addClass('hidden');
-                $labreport.addClass('hidden');
-                $labreportExperiment.addClass('hidden');
-                $assignmentPreviewBtn.addClass('hidden');
-                $assignmentDownloadBtn.addClass('hidden');
-                $labreportPreviewBtn.addClass('hidden');
-                $labreportDownloadBtn.addClass('hidden');
-            }
-        });
-
-        // Form submission logic
-        $form.on('submit', function (e) {
-            e.preventDefault();
-
-            if ($pageSelect.val() === "") {
-                alert("Please select a page type first!");
-                return false;
-            }
-
-            const $submitBtn = $(document.activeElement);
-            const actionValue = $submitBtn.val();
-            let url;
-
-            if (actionValue === 'preview_assignment') {
-                url = "{% url 'submission_assignment' %}";
-            } else if (actionValue === 'download_assignment') {
-                url = "{% url 'submission_assignment' %}";
-            } else if (actionValue === 'preview_labreport') {
-                url = "{% url 'submission_labreport' %}";
-            } else if (actionValue === 'download_labreport') {
-                url = "{% url 'submission_labreport' %}";
-            } else {
-                alert("Unknown action!");
-                return false;
-            }
-
-            // Build a new form to submit
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = url;
-            form.style.display = 'none';
-
-            // Append form data
-            $(this).find('input, select, textarea').each(function () {
-                if (this.name) {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = this.name;
-                    input.value = $(this).val();
-                    form.appendChild(input);
-                }
-            });
-
-            // Append CSRF token
-            const csrf = document.createElement('input');
-            csrf.type = 'hidden';
-            csrf.name = 'csrfmiddlewaretoken';
-            csrf.value = '{{ csrf_token }}';
-            form.appendChild(csrf);
-
-            document.body.appendChild(form);
-            form.submit();
-        });
-    });
-</script>
-{% endcomment%}
 
 <script>
     $(document).ready(function () {
@@ -786,7 +677,8 @@ $(document).ready(function() {
                 $assignmentDownloadBtn.addClass('hidden');
                 $labreportPreviewBtn.removeClass('hidden');
                 $labreportDownloadBtn.removeClass('hidden');
-                $form.attr('action', "{% url 'submission_labreport' %}");
+                
+                $form.attr('action', "{% url 'submission_assignment' %}");
             } else {
                 $assignment.addClass('hidden');
                 $labreport.addClass('hidden');

@@ -6,7 +6,6 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from .views import (
     SubmissionCreateView,
     AssignmentCoverPageView,
-    LabCoverPageView,
     CoverPageFormView,
     UniversityTemplateView
 )
@@ -21,11 +20,6 @@ urlpatterns = [
         'submission/assignment/',
         AssignmentCoverPageView.as_view(),
         name='submission_assignment'
-    ),
-    path(
-        'submission/labreport/',
-        LabCoverPageView.as_view(),
-        name='submission_labreport'
     ),
     path(
         'submission/',

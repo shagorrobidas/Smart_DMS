@@ -10,7 +10,7 @@
                 <img src="file://{{ university_logo_path }}" alt="University Logo" class="logo" />
             {% endif %}
         </div>
-        <div class="assignment-title">ASSIGNMENT</div>
+        <div class="assignment-title">{{ template.title }}</div>
         <table class="info-table">
             <tr>
                 <td class="label">Course Code</td>
@@ -22,11 +22,25 @@
                 <td class="colon">:</td>
                 <td class="value">{{ course_title }}</td>
             </tr>
+            {% if template.code == 1 %}
             <tr>
                 <td class="label">Assignment No</td>
                 <td class="colon">:</td>
                 <td class="value">{{ assignment_no }}</td>
             </tr>
+            {% elif template.code == 2 %}
+            <tr>
+                <td class="label">Experiment Name</td>
+                <td class="colon">:</td>
+                <td class="value">{{ labreport_name }}</td>
+            </tr>
+            <tr>
+                <td class="label">Experiment No</td>
+                <td class="colon">:</td>
+                <td class="value">{{ labreport_experiment }}</td>
+            </tr>
+            {% endif %}
+
         </table>
 
         <div class="submission-section">

@@ -117,3 +117,39 @@
 </div>
 
 
+<div class="modal fade" id="addProgramModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="addProgramModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProgramModalLabel">Create Program</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color: red;">&times;</span>
+                </button>
+            </div>
+            <form id="programForm" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        <label for="{{ program_form.program_name.id_for_label }}" name="name" class="col-sm-3 col-form-label">Program Name</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ program_form.program_name }}
+                        </div>
+                        <label for="{{ program_form.program_code.id_for_label }}" name="code" class="col-sm-3 col-form-label">Code</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ program_form.program_code }}
+                        </div>
+                        <label for="{{ program_form.program_discription.id_for_label }}" name="program_discription" class="col-sm-3 col-form-label">Description</label>
+                        <div class="col-sm-9 mb-3">
+                            {{ program_form.program_discription }}
+                        </div>  
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

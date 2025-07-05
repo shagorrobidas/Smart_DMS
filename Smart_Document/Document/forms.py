@@ -1,6 +1,12 @@
 # forms.py
 from django import forms
-from .models import Submission, University, Department, Position
+from .models import (
+    Submission,
+    University,
+    Department,
+    Position,
+    Program
+)
 
 
 class SubmissionForm(forms.ModelForm):
@@ -95,6 +101,31 @@ class PositionForm(forms.ModelForm):
             'position_code': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter unique code (e.g., P001)'
+            }),
+        }
+
+
+class ProgramForm(forms.ModelForm):
+    class Meta:
+        model = Program
+        fields = [
+            'program_name',
+            'program_code',
+            'program_discription'
+        ]
+        widgets = {
+            'program_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter program name'
+            }),
+            'program_code': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter unique code (e.g., BSc101)'
+            }),
+            'program_discription': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter program description',
+                'rows': 3
             }),
         }
 

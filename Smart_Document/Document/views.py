@@ -12,7 +12,8 @@ from .forms import (
     SubmissionForm,
     UniversityForm,
     DepatmentForm,
-    PositionForm
+    PositionForm,
+    ProgramForm
 )
 from .models import (
     University,
@@ -116,6 +117,7 @@ class CoverPageFormView(TemplateView):
         context['university_form'] = UniversityForm()
         context['department_form'] = DepatmentForm()
         context['position_form'] = PositionForm()
+        context['program_form'] = ProgramForm()
         return context
 
 
